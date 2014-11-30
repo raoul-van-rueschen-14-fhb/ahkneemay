@@ -1,6 +1,6 @@
 {
   "name": "ahkneemay",
-  "description": "An anime valet that helps with keeping track of your watched anime series and movies.",
+  "description": "A manager that keeps track of your watched anime titles by storing detailed information and images in the cloud. This module relies on the Amazon Web Services EC2, DynamoDB and S3-Buckets.",
   "version": "0.1.0",
   "homepage": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay",
   "author": {
