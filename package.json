@@ -1,0 +1,37 @@
+{
+  "name": "ahkneemay",
+  "description": "An anime valet that helps with keeping track of your watched anime series and movies.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay",
+  "author": {
+    "name": "Raoul van Rüschen",
+    "email": "vanruesc@fh-brandenburg.de"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/raoul-van-rueschen-14-fhb/ahkneemay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "lib/ahkneemay",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.4",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt": "~0.4.5"
+  },
+  "keywords": []
+}
