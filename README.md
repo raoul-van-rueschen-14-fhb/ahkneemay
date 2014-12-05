@@ -1,20 +1,16 @@
 # ahkneemay [![Build Status](https://travis-ci.org/raoul-van-rueschen-14-fhb/ahkneemay.svg)](http://travis-ci.org/raoul-van-rueschen-14-fhb/ahkneemay)
 
-A manager that keeps track of your watched anime titles by storing detailed information and images in the cloud. This module relies on the Amazon Web Services EC2, DynamoDB and S3-Buckets.
+A web server that keeps track of your watched animes by storing information the cloud. This project relies on the Amazon Web Services EC2, DynamoDB and S3-Buckets.
 
-## Getting Started
-Install the module with: `npm install ahkneemay`
+## Purpose of this Projekt
+This project is/was a graded assignment in the course `System Integration` in the University of Applied Sciences, Brandenburg. AWS and test automation are the points of interest.
 
 ```javascript
-var ahkneemay = require("ahkneemay");
-ahkneemay.nyi(); // nyi
+
 ```
 
 ## Documentation
 _(Coming soon)_
-
-## Examples
-A simple usage example can be found in the `example` folder.
 
 ## Contributing
 Maintain the existing coding style or get rekt. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).

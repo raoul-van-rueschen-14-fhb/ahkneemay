@@ -1,0 +1,423 @@
+/**
+ * The main stylesheet.
+ *
+ * Table of Contents:
+ * 
+ * 01. Fonts
+ * 02. Basics
+ * 03. Canvas
+ * 04. Tables
+ * 05. Anchors and Navigation
+ * 06. Page Structure
+ * 07. Forms and Input
+ *
+ * @author Raoul van Rueschen
+ * @version 0.0.1, 31.10.2014
+ */
+
+/**
+ * 01. Fonts
+ */
+
+@font-face {
+ font-family: Walkway;
+ src: url("./fonts/walkway.eot");
+ src: local("☺"),
+      url("./fonts/walkway.woff") format("woff"),
+      url("./fonts/walkway.otf") format("opentype"),
+      url("./fonts/walkway.svg#Walkway") format("svg"),
+      url("./fonts/walkway.ttf") format("truetype");
+}
+
+/**
+ * 02. Basics
+ */
+
+html {
+ margin: 0;
+ padding: 0;
+ width: 100%;
+ height: 100%;
+}
+
+body {
+ font-family: Walkway, Sans-Serif;
+ font-size: 4vmin;
+ color: rgb(160, 160, 160);
+ background-color: rgb(40, 40, 40);
+ background-image: url("../img/wood2.png");
+ background-repeat: repeat;
+ background-position: top left;
+ margin: 0;
+ padding: 0;
+ overflow: hidden;
+ text-align: left;
+ width: 100%;
+ height: 100%;
+ cursor: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+ font-weight: normal;
+ font-size: 6vmin;
+ text-align: left;
+ margin: auto;
+ padding: 0;
+ padding-bottom: 2vh;
+}
+
+h2 {
+ font-size: 5vmin;
+}
+
+h3 {
+ font-size: 4vmin;
+}
+
+p {
+ text-align: left;
+ margin: auto;
+ padding: 0;
+}
+
+ul, ol {
+}
+
+li {
+}
+
+img {
+ border: none;
+ outline: none;
+ margin: 0;
+ padding: 0;
+}
+
+/**
+ * 03. Canvas
+ */
+
+canvas {
+}
+
+/**
+ * 04. Tables
+ */
+
+table {
+ border-collapse: separate;
+ border-spacing: 6px 8px;
+ padding: 0;
+ border: none;
+ margin: auto;
+ width: 100%;
+}
+
+tr {
+}
+
+th, td {
+ font-size: 3.8vmin;
+ text-align: left;
+ vertical-align: middle;
+ border-radius: 8px;
+ padding: 6px;
+}
+
+th {
+ font-weight: bold;
+}
+
+td span {
+ display: inline-block;
+ padding: 0 1vw;
+ margin-right: 1vw;
+ border-radius: 8px;
+}
+
+/**
+ * 05. Anchors and Navigation
+ */
+
+a {
+ color: inherit;
+ text-decoration: none;
+ transition: color 0.5s;
+}
+
+a:visited {
+ color: inherit;
+}
+
+a:hover,
+a:active {
+ color: rgb(255, 255, 255);
+}
+
+#navigation {
+ display: inline-block;
+ margin: auto;
+ padding: 0 5vmin 0 5vmin;
+ vertical-align: top;
+ font-size: 0;
+}
+
+#navigation li {
+ list-style: none;
+ display: inline-block;
+}
+
+#navigation a {
+ display: block;
+ margin: auto;
+ padding: 0 4vmin;
+ height: 10vmin;
+ line-height: 10vmin;
+ font-size: 4vmin;
+ border: none;
+ border-bottom: 1px dotted transparent;
+ background-color: transparent;
+ transition: color 0.5s, border-color 0.5s, background-color 0.5s;
+}
+
+#navigation a:hover {
+ background-color: rgba(0, 255, 255, 0.05);
+}
+
+#navigation a:hover,
+#navigation a.current {
+ border-color: rgb(200, 80, 200);
+}
+
+/**
+ * 06. Page Structure
+ * ________________________________
+ * Titles and Divs with ARIA-Roles.
+ */
+
+div {
+ padding: 0;
+ margin: auto;
+ border: none;
+}
+
+div[role="banner"] {
+ position: relative;
+ z-index: 0;
+ top: 0;
+ width: 100%;
+ height: 100%;
+ text-align: center;
+ -webkit-transform-style: preserve-3d;
+ -moz-transform-style: preserve-3d;
+ transform-style: preserve-3d;
+}
+
+#title {
+ position: relative;
+ top: 50%;
+ transform: translateY(-50%);
+ text-align: center;
+ white-space: nowrap;
+}
+
+#title h1 {
+ padding: 0;
+ font-size: 10vmin;
+ text-align: center;
+ color: rgb(220, 60, 20);
+ text-shadow: 0 0 18px rgb(12, 12, 12);
+}
+
+#title h2 {
+ padding: 0;
+ font-family: inherit;
+ font-size: 3vmin;
+ text-align: center;
+}
+
+div[role="main"] {
+ position: absolute;
+ z-index: 1;
+ top: 0;
+ width: 100%;
+ height: 100%;
+}
+
+div[role="complementary"] {
+ position: fixed;
+ z-index: 5;
+ top: 0;
+ left: 0;
+ right: 0;
+ text-align: right;
+ background-color: rgba(0, 0, 0, 0.1);
+}
+
+div[role="contentinfo"] {
+ position: fixed;
+ z-index: 4;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ padding: 0 2vw;
+ text-align: center;
+ font-size: 2vmin;
+ color: rgb(30, 150, 150);
+ text-shadow: 0 0 18px rgb(12, 12, 12);
+ height: 5vmin;
+ line-height: 5vmin;
+ background-color: rgba(0, 0, 0, 0.1);
+}
+
+div[role="contentinfo"] h1 {
+ font-size: 3vmin;
+}
+
+#contents {
+ position: absolute;
+ z-index: 3;
+ top: 10vmin;
+ bottom: 5vmin;
+ left: 0;
+ right: 0;
+ padding: 2vmin;
+ overflow: hidden;
+ text-align: center;
+ border-top: 1px solid rgb(100, 30, 100);
+ border-bottom: 1px solid rgb(30, 100, 100);
+}
+
+#about {
+ border: 2px solid rgb(100, 100, 100);
+ border-width: 2px 4px 5px 2px;
+ border-radius: 12px;
+ margin: 15vh 10vw;
+ padding: 5vmin;
+}
+
+#me {
+ position: absolute;
+ top: 8vh;
+ right: 15vw;
+ border: 2px solid rgb(100, 100, 100);
+ border-radius: 80px;
+ width: 23vmin;
+ height: 23vmin;
+ max-width: 150px;
+ max-height: 150px;
+}
+
+/**
+ * 07. Forms and Input
+ */
+
+form {
+ text-align: center;
+ margin: auto;
+}
+
+label {
+ vertical-align: middle;
+ padding: 2px 0;
+}
+
+.file,
+select, input, textarea {
+ font-family: inherit;
+ font-size: inherit;
+ color: rgb(220, 60, 20);
+ outline: none;
+ vertical-align: middle;
+ background-color: rgba(0, 0, 0, 0.1);
+ border: 1px solid rgb(12, 12, 12);
+ border-radius: 8px;
+}
+
+.file:hover,
+input[type="submit"],
+input[type="button"] {
+ outline: none;
+ transition: background-color 0.5s;
+}
+
+.file:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+ background-color: rgba(100, 0, 0, 0.25);
+}
+
+.file,
+input[type="submit"] {
+ margin: 2vmin auto;
+}
+
+input[type="file"] {
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="radio"],
+input[type="checkbox"] {
+ cursor: pointer;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+ border-radius: 4px;
+ -webkit-appearance: button;
+ border: 1px solid rgb(12, 12, 12);
+ background-color: rgba(0, 0, 0, 0.25);
+ white-space: nowrap;
+ overflow: hidden;
+ width: 3vmin;
+ height: 3vmin;
+ transition: background-color 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+input[type="radio"] {
+ border-radius: 15px;
+}
+
+input[type="checkbox"]:checked {
+ background-color: rgba(60, 60, 60, 0.6);
+ border-color: rgb(45, 45, 45);
+ box-shadow: 0px 0px 12px rgb(225, 200, 160);
+}
+
+#anime {
+ margin-top: 16vh;
+}
+
+.label-box {
+ display: inline-block;
+ text-align: left;
+ vertical-align: middle;
+}
+
+.label-box label {
+ display: block;
+ padding-right: 1vw;
+ margin: 1vh 0;
+}
+
+.input-box {
+ display: inline-block;
+ text-align: left;
+ vertical-align: middle;
+}
+
+.file,
+.input-box input {
+ display: block;
+ margin: 1vh 0;
+}
+
+.input-box input.hidden {
+ display: none;
+}
+
+.file {
+ cursor: pointer;
+ text-align: center;
+}

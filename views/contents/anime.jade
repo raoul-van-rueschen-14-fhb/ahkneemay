@@ -1,0 +1,22 @@
+if(message.length)
+ p(role="alert").flash #{message}
+
+form(action="/anime" method="post" enctype="multipart/form-data")#anime
+
+ .label-box
+  label(for="inputTitle") Title
+  label(for="inputAuthor") Author
+  label(for="inputPublisher") Publisher
+  label(for="inputYear") Year
+  label(for="inputPic") Picture
+
+ .input-box
+  input(type="text" name="title" placeholder="" required aria-required="true")#inputTitle
+  input(type="text" name="author" placeholder="" required aria-required="true")#inputAuthor
+  input(type="text" name="publisher" placeholder="" required aria-required="true")#inputPublisher
+  input(type="text" name="year" placeholder="" required aria-required="true")#inputYear
+  label(for="inputPic").file Select a file&hellip;
+  input(type="file" name="pic" required aria-required="true")#inputPic.hidden
+
+ div
+  input(type="submit" value="Add to List")

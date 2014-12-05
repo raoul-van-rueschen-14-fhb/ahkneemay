@@ -1,0 +1,42 @@
+doctype html
+html(lang="en")
+ head
+
+  title #{title}
+
+  meta(charset="utf-8")
+  meta(name="author" content="Raoul van Rueschen")
+  meta(name="description" content="#{description}")
+  meta(name="robots" content="index, follow")
+
+  link(rel="stylesheet" href="../css/main.css")
+
+  block stylesheets
+
+  script(src="../js/lib/general.min.js")
+  script(src="../js/modules/history.js")
+  script(src="../js/modules/stay.js")
+
+  block scripts
+
+ body
+
+  // Banner
+  div(role="banner")
+   block banner
+
+  // Primary Contents
+  div(role="main" id="main")
+   block main
+
+  // Aside
+  div(role="complementary")
+   block complementary
+    ul#navigation
+     include ./contents/navigation.jade
+
+  // Footer
+  div(role="contentinfo")
+   block contentinfo
+    noscript: p.warning Warning: javascript is disabled or unavailable in your browser.
+    h1 AhKneeMay!

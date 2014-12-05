@@ -1,7 +1,8 @@
 {
   "name": "ahkneemay",
-  "description": "A manager that keeps track of your watched anime titles by storing detailed information and images in the cloud. This module relies on the Amazon Web Services EC2, DynamoDB and S3-Buckets.",
+  "description": "A manager that keeps track of your watched animes by storing information in the cloud.",
   "version": "0.1.0",
+  "private": "true",
   "homepage": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay",
   "author": {
     "name": "Raoul van Rüschen",
@@ -26,6 +27,26 @@
   },
   "scripts": {
     "test": "grunt nodeunit"
+  },
+  "dependencies": {
+    "async-waterfall": "*",
+    "bcrypt-nodejs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "cookie-parser": "*",
+    "express": "*",
+    "express-session": "*",
+    "jade": "*",
+    "jpeg-js": "*",
+    "mysql": "*",
+    "multer": "*",
+    "nodemailer": "*",
+    "node-uuid": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "serve-favicon": "*",
+    "winston": "*",
+    "aws-sdk": "*"
   },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.4",

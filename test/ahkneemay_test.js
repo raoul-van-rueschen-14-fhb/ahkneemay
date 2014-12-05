@@ -1,36 +1,31 @@
-'use strict';
+/**
+ * Test Suite for the AhKneeMay Module.
+ */
 
-var ahkneemay = require('../lib/ahkneemay.js');
+"use strict";
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
+var ahkneemay = require("../lib/ahkneemay.js");
 
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
+module.exports = {
+ setUp: function(done)
+ {
+  // Setup AWS as Mockup.
+  ahkneemay.setupAWS(false);
+  done();
+ },
+ tearDown: function(done)
+ {
+  // Cleanup
+  done();
+ },
+ "create or use a bucket with an arbitrary name": function(test)
+ {
+  test.expect(1);
 
-exports['awesome'] = {
-  setUp: function(done) {
-    // setup here
-    done();
-  },
-  'no args': function(test) {
-    test.expect(1);
-    // tests here
-    test.equal(ahkneemay.awesome(), 'awesome', 'should be awesome.');
-    test.done();
-  },
+  ahkneemay.setupBucket("ahkneemay", function(result)
+  {
+   test.ok(result, "Bucket setup should succeed.");
+   test.done();
+  });
+ }
 };
