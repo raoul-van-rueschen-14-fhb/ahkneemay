@@ -2,8 +2,7 @@
 
 A web server that keeps track of your watched animes by storing information in the cloud. This project relies on the Amazon Web Services EC2, DynamoDB and S3-Buckets.
 
-## Purpose of this Projekt
-This project is/was a graded assignment in the course `System Integration` in the University of Applied Sciences, Brandenburg. AWS and test automation are the points of interest.
+## JS Code Test
 
 ```javascript
 
@@ -13,7 +12,7 @@ This project is/was a graded assignment in the course `System Integration` in th
 _(Coming soon)_
 
 ## Contributing
-Maintain the existing coding style or get rekt. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
 _(Nothing yet)_
