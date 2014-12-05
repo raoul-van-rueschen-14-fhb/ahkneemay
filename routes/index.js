@@ -68,6 +68,9 @@ module.exports = function(server, passport)
  // Add a new anime and redirect to the form with a status message.
  server.post("/anime/:json?", main.addAnime, sendPageOrJson);
 
+ // Setup another route for the homepage to support asynchronous requests.
+ server.get("/json", main.index, sendPageOrJson);
+
  // Catch all other requests and treat them as 404 errors.
  server.all("*", function(request, response, next) {
   var error = new Error("Page not found.");

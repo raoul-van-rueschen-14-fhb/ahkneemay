@@ -47,7 +47,7 @@ server.use(cookieParser());
 
 // Use sessions.
 server.use(session({
- secret: "H/eX-N}Yp?T7jbW1337", 
+ secret: "H/eX-N}Yp?T7jbW1337", /* Randomized in production */
  saveUninitialized: true,
  resave: true
 }));
@@ -58,13 +58,13 @@ server.use(flash());
 // Get information from html forms with enctype "x-www-form-urlencoded".
 server.use(bodyParser.urlencoded({limit: "1mb", extended: false}));
 
-// Get data from html forms with enctype "form-data" and put it in a local folder.
+// Get files from html forms with enctype "form-data" and hold it in memory for an S3 transfer.
 server.use(multer({
  dest: "./uploads/",
  inMemory: true
 }));
 
-// Browsers fetch the favicon with an additional request.
+// Browsers fetch the favicon with an additional request. Handle that seperately.
 server.use(favicon(path.join(__dirname, "public/img/favicon.ico")));
 
 // Publish the static contents in the "public"-folder.
@@ -84,7 +84,7 @@ if(server.get("env") === "development")
 require("./routes/index")(server, passport);
 
 // Initialize AWS.
-ahkneemay.setupAWS(false);
+ahkneemay.setupAWS();
 ahkneemay.setupBucket("ahkneemay", function()
 {
  // Start the server.
