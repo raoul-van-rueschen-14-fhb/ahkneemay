@@ -322,7 +322,7 @@ label {
  padding: 2px 0;
 }
 
-.file,
+.browse,
 select, input, textarea {
  font-family: inherit;
  font-size: inherit;
@@ -334,20 +334,20 @@ select, input, textarea {
  border-radius: 8px;
 }
 
-.file:hover,
+.browse:hover,
 input[type="submit"],
 input[type="button"] {
  outline: none;
  transition: background-color 0.5s;
 }
 
-.file:hover,
+.browse:hover,
 input[type="submit"]:hover,
 input[type="button"]:hover {
  background-color: rgba(100, 0, 0, 0.25);
 }
 
-.file,
+.browse,
 input[type="submit"] {
  margin: 2vmin auto;
 }
@@ -407,17 +407,21 @@ input[type="checkbox"]:checked {
  vertical-align: middle;
 }
 
-.file,
+.browse,
 .input-box input {
  display: block;
  margin: 1vh 0;
+}
+
+.input-box label {
+ display: inline-block;
 }
 
 .input-box input.hidden {
  display: none;
 }
 
-.file {
+.browse {
  cursor: pointer;
  text-align: center;
 }

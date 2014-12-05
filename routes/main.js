@@ -19,11 +19,11 @@ module.exports.index = function(request, response, next)
  response.locals.jade.template = "index";
  response.locals.jade.locals = {
   title: "AhKneeMay",
-  description: "This website can keep track of your watched animes by storing information in the cloud.",
+  description: "This is an overview of your watched animes.",
   currentPage: "Home"
  };
 
- next();
+ ahkneemay.listAnimes(request, response, next);
 };
 
 /**
@@ -54,24 +54,24 @@ module.exports.addAnime = function(request, response, next)
   author: request.body.author,
   year: request.body.year,
   publisher: request.body.publisher,
-  img: request.body.img
+  img: request.files.pic
+ };
+
+ response.locals.jade = {};
+ response.locals.jade.template = "anime";
+ response.locals.jade.locals = {
+  title: "Add an Anime - AhKneeMay",
+  description: "Add a new title to your list of watched animes.",
+  currentPage: "Add Anime",
+  message: request.flash("status")
  };
 
  if(anime.title && anime.author && anime.year && anime.publisher && anime.img)
  {
-  ahkneemay.addAnime(anime, next);
+  ahkneemay.addAnime(anime, response.locals.jade.locals, next);
  }
  else
  {
-  response.locals.jade = {};
-  response.locals.jade.template = "anime";
-  response.locals.jade.locals = {
-   title: "Add an Anime - AhKneeMay",
-   description: "Add a new title to the list of watched animes.",
-   currentPage: "Add Anime",
-   message: request.flash("status")
-  };
-
   next();
  }
 };

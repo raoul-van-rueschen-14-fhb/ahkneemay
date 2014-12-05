@@ -10,7 +10,7 @@ module.exports = {
  setUp: function(done)
  {
   // Setup AWS as Mockup.
-  ahkneemay.setupAWS(false);
+  ahkneemay.setupAWS(true);
   done();
  },
  tearDown: function(done)

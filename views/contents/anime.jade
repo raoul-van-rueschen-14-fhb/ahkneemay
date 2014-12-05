@@ -15,7 +15,8 @@ form(action="/anime" method="post" enctype="multipart/form-data")#anime
   input(type="text" name="author" placeholder="" required aria-required="true")#inputAuthor
   input(type="text" name="publisher" placeholder="" required aria-required="true")#inputPublisher
   input(type="text" name="year" placeholder="" required aria-required="true")#inputYear
-  label(for="inputPic").file Select a file&hellip;
+  label(for="inputPic").browse Browse
+  label(for="inputPic").selectedFile No file chosen
   input(type="file" name="pic" required aria-required="true")#inputPic.hidden
 
  div

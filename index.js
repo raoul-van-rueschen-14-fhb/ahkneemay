@@ -8,6 +8,7 @@
 "use strict";
 
 var cookieParser = require("cookie-parser"),
+ ahkneemay = require("./lib/ahkneemay"),
  session = require("express-session"),
  bodyParser = require("body-parser"),
  favicon = require("serve-favicon"),
@@ -55,10 +56,13 @@ server.use(session({
 server.use(flash());
 
 // Get information from html forms with enctype "x-www-form-urlencoded".
-server.use(bodyParser.urlencoded({limit: "50mb", extended: false}));
+server.use(bodyParser.urlencoded({limit: "1mb", extended: false}));
 
 // Get data from html forms with enctype "form-data" and put it in a local folder.
-server.use(multer({dest: "./uploads/"}));
+server.use(multer({
+ dest: "./uploads/",
+ inMemory: true
+}));
 
 // Browsers fetch the favicon with an additional request.
 server.use(favicon(path.join(__dirname, "public/img/favicon.ico")));
@@ -79,17 +83,21 @@ if(server.get("env") === "development")
 // Setup the routes and secure them with passport.
 require("./routes/index")(server, passport);
 
-// Start the server.
-httpServer = http.createServer(server);
-
-httpServer.listen(80, function()
+// Initialize AWS.
+ahkneemay.setupAWS(false);
+ahkneemay.setupBucket("ahkneemay", function()
 {
- var timeString;
+ // Start the server.
+ httpServer = http.createServer(server);
+ httpServer.listen(80, function()
+ {
+  var timeString;
 
- startTime = new Date();
- timeString = startTime.getFullYear() + "-" + (startTime.getMonth() + 1) + "-" + startTime.getDate() + " " +
-              startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds()
+  startTime = new Date();
+  timeString = startTime.getFullYear() + "-" + (startTime.getMonth() + 1) + "-" + startTime.getDate() + " " +
+               startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds()
 
- logger.log("info", "Start time: " + timeString);
- logger.log("info", "HTTP-Server is now running on port 80");
+  logger.log("info", "Start time: " + timeString);
+  logger.log("info", "HTTP-Server is now running on port 80");
+ });
 });

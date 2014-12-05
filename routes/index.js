@@ -66,7 +66,7 @@ module.exports = function(server, passport)
  server.get("/anime/:json?", main.addAnime, sendPageOrJson);
 
  // Add a new anime and redirect to the form with a status message.
- server.post("/anime", main.addAnime);
+ server.post("/anime/:json?", main.addAnime, sendPageOrJson);
 
  // Catch all other requests and treat them as 404 errors.
  server.all("*", function(request, response, next) {
