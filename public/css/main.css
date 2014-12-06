@@ -408,7 +408,7 @@ input[type="checkbox"]:checked {
  vertical-align: middle;
 }
 
-.browse, .selectedFile,
+.browse,
 .input-box input {
  display: block;
  margin: 1vh 0;
@@ -424,5 +424,9 @@ input[type="checkbox"]:checked {
 
 .browse {
  cursor: pointer;
+ text-align: center;
+}
+
+.flash {
  text-align: center;
 }

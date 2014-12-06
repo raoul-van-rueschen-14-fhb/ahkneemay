@@ -16,7 +16,7 @@ module.exports = {
  {
   done();
  },
- test1: function(test)
+ "initialize aws": function(test)
  {
   test.expect(1);
 
@@ -26,17 +26,11 @@ module.exports = {
    test.done();
   });
  },
- test2: function(test)
+ "add an anime": function(test)
  {
-  var anime = {
-   title: "dummy",
-   author: "dummy",
-   year: 2000,
-   publisher: "dummy",
-   img: {}
-  };
+  var anime = {title: "dummy", img: {}};
 
-  ahkneemay.addAnime(anime, {}, function(result)
+  ahkneemay.addAnime(anime, function(result)
   {
    test.equal(result, null, "adding an anime should not yield any errors under optimal conditions.");
    test.done();

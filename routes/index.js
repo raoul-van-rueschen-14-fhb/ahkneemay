@@ -59,11 +59,11 @@ module.exports = function(server, passport)
  // Setup the homepage, which shows the overview of all watched animes.
  server.get("/", main.index, sendPageOrJson);
 
- // Setup the homepage, which shows the overview of all watched animes.
+ // Setup an about page.
  server.get("/about/:json?", main.about, sendPageOrJson);
 
  // Setup a page that shows a form for adding a new anime.
- server.get("/anime/:json?", main.addAnime, sendPageOrJson);
+ server.get("/anime/:json?", main.formAddAnime, sendPageOrJson);
 
  // Add a new anime and redirect to the form with a status message.
  server.post("/anime/:json?", main.addAnime, sendPageOrJson);

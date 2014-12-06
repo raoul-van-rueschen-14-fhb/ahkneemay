@@ -7,7 +7,9 @@
 
 "use strict";
 
-var ahkneemay = require("../lib/ahkneemay");
+var ahkneemay = require("../lib/ahkneemay"),
+ waterfall = require("async-waterfall"),
+ onlyNumbers = /^[0-9]+$/;
 
 /**
  * The Homepage.
@@ -44,54 +46,76 @@ module.exports.about = function(request, response, next)
 };
 
 /**
- * Adds a new anime to the db or shows a form for doing that.
+ * Shows a form for adding an anime.
  */
 
-module.exports.addAnime = function(request, response, next)
+module.exports.formAddAnime = function(request, response, next)
 {
- var anime = {
-  title: request.body.title,
-  author: request.body.author,
-  year: request.body.year,
-  publisher: request.body.publisher,
-  img: request.files.pic
- };
-
  response.locals.jade = {};
  response.locals.jade.template = "anime";
  response.locals.jade.locals = {
   title: "Add an Anime - AhKneeMay",
   description: "Add a new title to your list of watched animes.",
   currentPage: "Add Anime",
-  message: request.flash("error")
+  message: request.flash("info")
  };
 
- if(anime.title && anime.author && anime.year && anime.publisher && anime.img)
- {
-  if(/^[0-9]+$/.test(anime.year))
+ next();
+};
+
+/**
+ * Adds a new anime to the list.
+ */
+
+module.exports.addAnime = function(request, response, next)
+{
+ var anime = {
+  title: request.body.title,
+  publisher: request.body.publisher,
+  year: request.body.year,
+  seasons: request.body.seasons,
+  author: request.body.author,
+  img: request.files.image
+ };
+
+ // Input validation.
+ waterfall([
+  function(callback)
   {
-   // Check if the file is an image.
-   if(anime.img.mimetype === "image/jpeg" || anime.img.mimetype === "image/png")
-   {
-    ahkneemay.addAnime(anime, response.locals.jade.locals, next);
-   }
-   else
-   {
-    request.flash("error", "The image's type must be JPG or PNG.");
-    next();
-   }
-  }
-  else
+   // Check if the required fields are set.
+   var error = (anime.title && anime.img) ? null : new Error("Please fill out every required field!");
+   callback(error);
+  },
+  function(callback)
   {
-   request.flash("error", "The year must be a numeric value!");
-   next();
+   // Check if the year is set and if so: make sure it's a numeric value.
+   var error = (!anime.year || (anime.year && onlyNumbers.test(anime.year))) ? null : new Error("Please provide a numeric value for the year.");
+   callback(error);
+  },
+  function(callback)
+  {
+   // Check if the seasons count is set and if so: make sure it's a numeric value.
+   var error = (!anime.seasons || (anime.seasons && onlyNumbers.test(anime.seasons))) ? null : new Error("Please provide a numeric value for the amount of seasons.");
+   callback(error);
+  },
+  function(callback)
+  {
+   // Check if the provided file is an image.
+   var error = (anime.img.mimetype === "image/jpeg" || anime.img.mimetype === "image/png") ? null : new Error("The image's type must be JPG or PNG.");
+   callback(error);
+  },
+  function(callback)
+  {
+   // All good, no try to add the anime.
+   ahkneemay.addAnime(anime, callback);
   }
- }
- else
+ ],
+ function(error, result)
  {
-  request.flash("error", "Please fill out every field before submitting!");
-  next();
- }
+  if(error) { request.flash("info", error.message); }
+  else if(result) { request.flash("info", result); }
+  response.redirect(request.params.json ? "/anime/json" : "/anime");
+ });
 };
 
 /**
@@ -100,11 +124,11 @@ module.exports.addAnime = function(request, response, next)
 
 module.exports.removeAnime = function(request, response, next)
 {
- var id = request.body.id;
+ var anime = request.body.anime;
 
- if(id)
+ if(anime)
  {
-  ahkneemay.removeAnime(id, next);
+  ahkneemay.removeAnime(anime, next);
  }
  else
  {

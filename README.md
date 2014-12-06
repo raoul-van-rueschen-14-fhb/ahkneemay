@@ -2,10 +2,12 @@
 
 A web server that keeps track of your watched animes by storing information in the cloud. This project relies on the Amazon Web Services EC2, DynamoDB and S3-Buckets.
 
-## JS Code Test
+## Running the Server
+
+Download the project, open the terminal or command line and navigate to the project's root directory. Then start the server with:
 
 ```javascript
-
+node index.js
 ```
 
 ## Documentation
