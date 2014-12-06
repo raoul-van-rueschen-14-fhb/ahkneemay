@@ -28,7 +28,7 @@ module.exports = {
  },
  "add an anime": function(test)
  {
-  var anime = {title: "dummy", img: {}};
+  var anime = {title: "dummy", img: {mimetype: "image/jpeg"}};
 
   ahkneemay.addAnime(anime, function(result)
   {

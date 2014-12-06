@@ -8,8 +8,7 @@
 "use strict";
 
 var ahkneemay = require("../lib/ahkneemay"),
- waterfall = require("async-waterfall"),
- onlyNumbers = /^[0-9]+$/;
+ http = require("http");
 
 /**
  * The Homepage.
@@ -22,7 +21,8 @@ module.exports.index = function(request, response, next)
  response.locals.jade.locals = {
   title: "AhKneeMay",
   description: "This is an overview of your watched animes.",
-  currentPage: "Home"
+  currentPage: "Home",
+  message: request.flash("info")
  };
 
  ahkneemay.listAnimes(request, response, next);
@@ -46,10 +46,42 @@ module.exports.about = function(request, response, next)
 };
 
 /**
+ * An info page that uses the external TV-Rage API for fetching quickinfos about a given show.
+ * This page is kindof a workaround because ajax alone cannot request external resources.
+ */
+
+module.exports.info = function(request, response, next)
+{
+ var apiCall, responseText = "",
+  options = {
+   host: "services.tvrage.com", port: 80, method: "GET",
+   path: "/tools/quickinfo.php?show=" + request.params.anime
+  };
+
+ apiCall = http.request(options, function(res)
+ {
+  res.on("data", function(chunk) { responseText += chunk; });
+  res.on("end", function()
+  {
+   response.writeHead(res.statusCode, {"Content-Type": "text/plain"});
+   response.end(responseText);
+  });
+ });
+
+ apiCall.end();
+ apiCall.on("error", function(error)
+ {
+  responseText = error.message;
+  response.writeHead(500, {"Content-Type": "text/plain"});
+  response.end(responseText);
+ });
+};
+
+/**
  * Shows a form for adding an anime.
  */
 
-module.exports.formAddAnime = function(request, response, next)
+module.exports.anime = function(request, response, next)
 {
  response.locals.jade = {};
  response.locals.jade.template = "anime";
@@ -78,42 +110,17 @@ module.exports.addAnime = function(request, response, next)
   img: request.files.image
  };
 
- // Input validation.
- waterfall([
-  function(callback)
-  {
-   // Check if the required fields are set.
-   var error = (anime.title && anime.img) ? null : new Error("Please fill out every required field!");
-   callback(error);
-  },
-  function(callback)
-  {
-   // Check if the year is set and if so: make sure it's a numeric value.
-   var error = (!anime.year || (anime.year && onlyNumbers.test(anime.year))) ? null : new Error("Please provide a numeric value for the year.");
-   callback(error);
-  },
-  function(callback)
-  {
-   // Check if the seasons count is set and if so: make sure it's a numeric value.
-   var error = (!anime.seasons || (anime.seasons && onlyNumbers.test(anime.seasons))) ? null : new Error("Please provide a numeric value for the amount of seasons.");
-   callback(error);
-  },
-  function(callback)
-  {
-   // Check if the provided file is an image.
-   var error = (anime.img.mimetype === "image/jpeg" || anime.img.mimetype === "image/png") ? null : new Error("The image's type must be JPG or PNG.");
-   callback(error);
-  },
-  function(callback)
-  {
-   // All good, no try to add the anime.
-   ahkneemay.addAnime(anime, callback);
-  }
- ],
- function(error, result)
+ ahkneemay.addAnime(anime, function(error, result)
  {
-  if(error) { request.flash("info", error.message); }
-  else if(result) { request.flash("info", result); }
+  if(error)
+  {
+   request.flash("info", error.message);
+  }
+  else if(result)
+  {
+   request.flash("info", result);
+  }
+
   response.redirect(request.params.json ? "/anime/json" : "/anime");
  });
 };
@@ -132,6 +139,6 @@ module.exports.removeAnime = function(request, response, next)
  }
  else
  {
-  response.redirect("/");
+  response.redirect(request.params.json ? "/json" : "/");
  }
 };

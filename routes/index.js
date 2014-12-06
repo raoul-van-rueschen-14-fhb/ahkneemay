@@ -62,8 +62,11 @@ module.exports = function(server, passport)
  // Setup an about page.
  server.get("/about/:json?", main.about, sendPageOrJson);
 
+ // Setup a page for requesting anime infos from an external source.
+ server.get("/quickinfo/:anime", main.info);
+
  // Setup a page that shows a form for adding a new anime.
- server.get("/anime/:json?", main.formAddAnime, sendPageOrJson);
+ server.get("/anime/:json?", main.anime, sendPageOrJson);
 
  // Add a new anime and redirect to the form with a status message.
  server.post("/anime/:json?", main.addAnime, sendPageOrJson);
