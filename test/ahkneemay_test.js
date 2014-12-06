@@ -9,22 +9,19 @@ var ahkneemay = require("../lib/ahkneemay.js");
 module.exports = {
  setUp: function(done)
  {
-  // Setup AWS as Mockup.
-  ahkneemay.setupAWS(true);
   done();
  },
  tearDown: function(done)
  {
-  // Cleanup
   done();
  },
- "create or use a bucket with an arbitrary name": function(test)
+ "setup aws": function(test)
  {
   test.expect(1);
 
-  ahkneemay.setupBucket("ahkneemay", function(result)
+  ahkneemay.init(true, "ahkneemay", function(result)
   {
-   test.ok(result, "Bucket setup should succeed.");
+   test.equal(result, null, "AWS initialization should run without errors.");
    test.done();
   });
  }

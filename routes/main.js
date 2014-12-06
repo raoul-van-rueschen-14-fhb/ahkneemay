@@ -63,15 +63,25 @@ module.exports.addAnime = function(request, response, next)
   title: "Add an Anime - AhKneeMay",
   description: "Add a new title to your list of watched animes.",
   currentPage: "Add Anime",
-  message: request.flash("status")
+  message: request.flash("error")
  };
 
  if(anime.title && anime.author && anime.year && anime.publisher && anime.img)
  {
-  ahkneemay.addAnime(anime, response.locals.jade.locals, next);
+  // Check if the file is an image.
+  if(anime.img.mimetype === "image/jpeg" || anime.img.mimetype === "image/png")
+  {
+   ahkneemay.addAnime(anime, response.locals.jade.locals, next);
+  }
+  else
+  {
+   request.flash("error", "The image's type must be JPG or PNG.");
+   next();
+  }
  }
  else
  {
+  request.flash("error", "Please fill out every field before submitting!");
   next();
  }
 };

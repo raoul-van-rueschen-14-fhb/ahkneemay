@@ -47,7 +47,7 @@ server.use(cookieParser());
 
 // Use sessions.
 server.use(session({
- secret: "H/eX-N}Yp?T7jbW1337", /* Randomized in production */
+ secret: "H/eX-N}Yp?T7jbW1337", /* Randomized */
  saveUninitialized: true,
  resave: true
 }));
@@ -83,21 +83,27 @@ if(server.get("env") === "development")
 // Setup the routes and secure them with passport.
 require("./routes/index")(server, passport);
 
-// Initialize AWS.
-ahkneemay.setupAWS();
-ahkneemay.setupBucket("ahkneemay", function()
+// Initialize AWS and start the http server afterwards.
+ahkneemay.init(false, "ahkneemay", function(error)
 {
- // Start the server.
- httpServer = http.createServer(server);
- httpServer.listen(80, function()
+ if(error)
  {
-  var timeString;
+  logger.log("error", "Could not start the server. Error: " + error);
+ }
+ else
+ {
+  // Start the server.
+  httpServer = http.createServer(server);
+  httpServer.listen(80, function()
+  {
+   var timeString;
 
-  startTime = new Date();
-  timeString = startTime.getFullYear() + "-" + (startTime.getMonth() + 1) + "-" + startTime.getDate() + " " +
-               startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds()
+   startTime = new Date();
+   timeString = startTime.getFullYear() + "-" + (startTime.getMonth() + 1) + "-" + startTime.getDate() + " " +
+                startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds()
 
-  logger.log("info", "Start time: " + timeString);
-  logger.log("info", "HTTP-Server is now running on port 80");
- });
+   logger.log("info", "Start time: " + timeString);
+   logger.log("info", "HTTP-Server is now running.");
+  });
+ }
 });
