@@ -68,14 +68,22 @@ module.exports.addAnime = function(request, response, next)
 
  if(anime.title && anime.author && anime.year && anime.publisher && anime.img)
  {
-  // Check if the file is an image.
-  if(anime.img.mimetype === "image/jpeg" || anime.img.mimetype === "image/png")
+  if(/^[0-9]+$/.test(anime.year))
   {
-   ahkneemay.addAnime(anime, response.locals.jade.locals, next);
+   // Check if the file is an image.
+   if(anime.img.mimetype === "image/jpeg" || anime.img.mimetype === "image/png")
+   {
+    ahkneemay.addAnime(anime, response.locals.jade.locals, next);
+   }
+   else
+   {
+    request.flash("error", "The image's type must be JPG or PNG.");
+    next();
+   }
   }
   else
   {
-   request.flash("error", "The image's type must be JPG or PNG.");
+   request.flash("error", "The year must be a numeric value!");
    next();
   }
  }
