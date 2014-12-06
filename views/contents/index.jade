@@ -1,0 +1,7 @@
+if(message.length)
+ p(role="alert").flash #{message}
+
+if(animes)
+ ul#animes
+  each anime in animes
+   li.anime= anime.title.S

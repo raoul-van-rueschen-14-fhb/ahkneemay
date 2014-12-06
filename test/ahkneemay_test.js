@@ -16,23 +16,48 @@ module.exports = {
  {
   done();
  },
- "initialize aws": function(test)
+ "initializing aws": function(test)
  {
   test.expect(1);
 
-  ahkneemay.init(true, "ahkneemay", function(result)
+  ahkneemay.init(true, "ahkneemay", function(error)
   {
-   test.equal(result, null, "aws initialization should finish without errors under optimal conditions.");
+   test.equal(error, null, "should finish without errors under mockup conditions.");
    test.done();
   });
  },
- "add an anime": function(test)
+ "adding an anime": function(test)
  {
   var anime = {title: "dummy", img: {mimetype: "image/jpeg"}};
 
-  ahkneemay.addAnime(anime, function(result)
+  test.expect(1);
+
+  ahkneemay.addAnime(anime, function(error)
   {
-   test.equal(result, null, "adding an anime should not yield any errors under optimal conditions.");
+   test.equal(error, null, "should not yield any errors under mockup conditions.");
+   test.done();
+  });
+ },
+ "listing all animes": function(test)
+ {
+  var locals = {};
+
+  test.expect(2);
+
+  ahkneemay.listAnimes(locals, function(error)
+  {
+   test.equal(error, null, "should not result in an error under mockup conditions.");
+   test.ok(locals.animes, "and there should be a set of animes in the provided locals afterwards.");
+   test.done();
+  });
+ },
+ "removing an anime": function(test)
+ {
+  test.expect(1);
+
+  ahkneemay.removeAnime("dummy", function(error)
+  {
+   test.equal(error, null, "should not result in an error under mockup conditions.");
    test.done();
   });
  }

@@ -7,6 +7,9 @@ block banner
 
 block contentinfo
  noscript: p.warning Warning: javascript is disabled or unavailable in your browser.
+ if(totalAnimes)
+  h1 Watched animes: #{totalAnimes}
 
 block main
- #contents.start
+ #contents
+  include ./contents/index.jade

@@ -13,6 +13,6 @@
 
 module.exports = [
  {name: "Home", href: "/"},
- {name: "Add Anime", href: "/anime"},
+ {name: "Add Anime", href: "/animes"},
  {name: "About", href: "/about"}
 ];

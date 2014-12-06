@@ -20,12 +20,12 @@ module.exports.index = function(request, response, next)
  response.locals.jade.template = "index";
  response.locals.jade.locals = {
   title: "AhKneeMay",
-  description: "This is an overview of your watched animes.",
+  description: "This page shows you an overview of your watched animes.",
   currentPage: "Home",
   message: request.flash("info")
  };
 
- ahkneemay.listAnimes(request, response, next);
+ ahkneemay.listAnimes(response.locals.jade.locals, next);
 };
 
 /**
@@ -46,11 +46,12 @@ module.exports.about = function(request, response, next)
 };
 
 /**
- * An info page that uses the external TV-Rage API for fetching quickinfos about a given show.
- * This page is kindof a workaround because ajax alone cannot request external resources.
+ * An info page that uses the external "TV-Rage" API for fetching quickinfos about a given show.
+ * This page is more of a workaround because ajax alone cannot request external resources, but it
+ * works great.
  */
 
-module.exports.info = function(request, response, next)
+module.exports.quickinfo = function(request, response, next)
 {
  var apiCall, responseText = "",
   options = {
@@ -81,10 +82,10 @@ module.exports.info = function(request, response, next)
  * Shows a form for adding an anime.
  */
 
-module.exports.anime = function(request, response, next)
+module.exports.form = function(request, response, next)
 {
  response.locals.jade = {};
- response.locals.jade.template = "anime";
+ response.locals.jade.template = "form";
  response.locals.jade.locals = {
   title: "Add an Anime - AhKneeMay",
   description: "Add a new title to your list of watched animes.",
@@ -112,16 +113,8 @@ module.exports.addAnime = function(request, response, next)
 
  ahkneemay.addAnime(anime, function(error, result)
  {
-  if(error)
-  {
-   request.flash("info", error.message);
-  }
-  else if(result)
-  {
-   request.flash("info", result);
-  }
-
-  response.redirect(request.params.json ? "/anime/json" : "/anime");
+  request.flash("info", error ? error.message : result);
+  response.redirect(request.params.json ? "/animes/json" : "/animes");
  });
 };
 
@@ -131,14 +124,11 @@ module.exports.addAnime = function(request, response, next)
 
 module.exports.removeAnime = function(request, response, next)
 {
- var anime = request.body.anime;
+ var anime = request.params.anime;
 
- if(anime)
+ ahkneemay.removeAnime(anime, function(error, result)
  {
-  ahkneemay.removeAnime(anime, next);
- }
- else
- {
+  request.flash("info", error ? error.message : result);
   response.redirect(request.params.json ? "/json" : "/");
- }
+ });
 };

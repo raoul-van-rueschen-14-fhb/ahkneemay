@@ -10,11 +10,11 @@
 "use strict";
 
 var navigation = require("./navigation"),
+ error = require("./error"),
+ main = require("./main"),
  path = require("path"),
  jade = require("jade"),
- compiledTemplates = {},
- main = require("./main"),
- error = require("./error");
+ compiledTemplates = {};
 
 module.exports = function(server, passport)
 {
@@ -63,13 +63,16 @@ module.exports = function(server, passport)
  server.get("/about/:json?", main.about, sendPageOrJson);
 
  // Setup a page for requesting anime infos from an external source.
- server.get("/quickinfo/:anime", main.info);
+ server.get("/quickinfo/:anime", main.quickinfo);
+
+ // Removes an anime.
+ server.get("/animes/delete/:anime/:json?", main.removeAnime);
 
  // Setup a page that shows a form for adding a new anime.
- server.get("/anime/:json?", main.anime, sendPageOrJson);
+ server.get("/animes/:json?", main.form, sendPageOrJson);
 
  // Add a new anime and redirect to the form with a status message.
- server.post("/anime/:json?", main.addAnime, sendPageOrJson);
+ server.post("/animes/:json?", main.addAnime, sendPageOrJson);
 
  // Setup another route for the homepage to support asynchronous requests.
  server.get("/json", main.index, sendPageOrJson);
