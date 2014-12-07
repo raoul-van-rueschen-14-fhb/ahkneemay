@@ -1,5 +1,6 @@
 if(message.length)
  p(role="alert").flash #{message}
+  a(href="/")#closeFlash Okay
 
 if(animes)
  ul#animes
@@ -8,15 +9,20 @@ if(animes)
     img(src="#{cloudFront}#{anime.img.S}" alt="Picture of #{anime.title.S}")
     h1= anime.title.S
     div.infos
+     a(href="/animes/delete/#{anime.title.S}") Remove
      if(anime.author)
-      label Author:
-      span= anime.author.S
+      div
+       label Author:
+       span= anime.author.S
      if(anime.publisher)
-      label Publisher:
-      span= anime.publisher.S
+      div
+       label Publisher:
+       span= anime.publisher.S
      if(anime.year)
-      label Year:
-      span= anime.year.N
+      div
+       label Year:
+       span= anime.year.N
      if(anime.seasons)
-      label Seasons:
-      span= anime.seasons.N
+      div
+       label Seasons:
+       span= anime.seasons.N

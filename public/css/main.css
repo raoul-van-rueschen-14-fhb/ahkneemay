@@ -309,28 +309,33 @@ div[role="contentinfo"] h1 {
 }
 
 .flash {
- text-align: center;
  position: absolute;
  z-index: 7;
  top: 50%;
- bottom: 50%;
  left: 50%;
- right: 50%;
- background-color: rgba(0, 0, 0, 0.35);
- transition: top 0.5s, left 0.5s, right 0.5s, bottom 0.5s;
+ min-width: 8vw;
+ max-width: 50vw;
+ min-height: 10vh;
+ padding: 2vmin;
+ transform: translate(-50%, -50%);
+ border-radius: 8px;
+ background-color: rgba(12, 12, 12, 0.85);
 }
 
-.flash:focus {
- top: 40%;
- bottom: 40%;
- left: 20%;
- right: 20%;
+.flash a {
+ position: absolute;
+ bottom: 1vmin;
+ left: 0;
+ right: 0;
+ text-align: center;
+ display: block;
 }
 
 #animes {
  height: 100%;
  width: 100%;
  text-align: left;
+ text-transform: capitalize;
 }
 
 #animes li {
@@ -362,6 +367,19 @@ div[role="contentinfo"] h1 {
  padding: 1vmin;
 }
 
+.infos a {
+ position: absolute;
+ z-index: 6;
+ bottom: 1vmin;
+ right: 1vmin;
+ color: rgb(0, 0, 0);
+ font-size: 2vmin;
+}
+
+.infos a:hover {
+ color: rgb(255, 0, 0);
+}
+
 .infos {
  position: absolute;
  z-index: 6;
@@ -376,10 +394,6 @@ div[role="contentinfo"] h1 {
 
 #animes li:hover .infos {
  top: 0;
-}
-
-.infos span {
- text-transform: capitalize;
 }
 
 /**
