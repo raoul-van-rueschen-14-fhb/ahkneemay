@@ -311,7 +311,7 @@ div[role="contentinfo"] h1 {
 .flash {
  text-align: center;
  position: absolute;
- z-index: 6;
+ z-index: 7;
  top: 50%;
  bottom: 50%;
  left: 50%;
@@ -325,6 +325,61 @@ div[role="contentinfo"] h1 {
  bottom: 40%;
  left: 20%;
  right: 20%;
+}
+
+#animes {
+ height: 100%;
+ width: 100%;
+ text-align: left;
+}
+
+#animes li {
+ position: relative;
+ display: inline-block;
+ font-size: 3vmin;
+ width: 16vw;
+ height: 32vh;
+ overflow: hidden;
+ background-color: black;
+ vertical-align: top;
+ margin: 1vmin;
+}
+
+#animes li img {
+ width: 100%;
+ height: 100%;
+}
+
+#animes h1 {
+ position: absolute;
+ z-index: 7;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ background-color: rgb(20, 100, 100);
+ color: rgb(240, 240, 240);
+ font-size: 3vmin;
+ padding: 1vmin;
+}
+
+.infos {
+ position: absolute;
+ z-index: 6;
+ top: 260px;
+ left: 0;
+ right: 0;
+ bottom: 5vmin;
+ padding: 1vmin;
+ background-color: rgb(20, 80, 80);
+ transition: top 0.5s;
+}
+
+#animes li:hover .infos {
+ top: 0;
+}
+
+.infos span {
+ text-transform: capitalize;
 }
 
 /**

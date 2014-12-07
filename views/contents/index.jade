@@ -4,4 +4,19 @@ if(message.length)
 if(animes)
  ul#animes
   each anime in animes
-   li.anime= anime.title.S
+   li
+    img(src="#{cloudFront}#{anime.img.S}" alt="Picture of #{anime.title.S}")
+    h1= anime.title.S
+    div.infos
+     if(anime.author)
+      label Author:
+      span= anime.author.S
+     if(anime.publisher)
+      label Publisher:
+      span= anime.publisher.S
+     if(anime.year)
+      label Year:
+      span= anime.year.N
+     if(anime.seasons)
+      label Seasons:
+      span= anime.seasons.N
