@@ -56,7 +56,7 @@ module.exports.quickinfo = function(request, response, next)
  var apiCall, responseText = "",
   options = {
    host: "services.tvrage.com", port: 80, method: "GET",
-   path: "/tools/quickinfo.php?show=" + request.params.anime
+   path: "/tools/quickinfo.php?show=" + encodeURIComponent(request.params.anime)
   };
 
  apiCall = http.request(options, function(res)

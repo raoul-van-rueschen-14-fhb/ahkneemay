@@ -4,9 +4,10 @@ A web server that keeps track of your watched animes by storing information in t
 
 ## Running the Server
 
-Download the project, open the terminal or command line and navigate to the project's root directory. Then start the server with:
+Download the project, open the terminal or command line and navigate to the project's root directory. Then fetch dependencies and start the server with:
 
 ```javascript
+npm install
 node index.js
 ```
 

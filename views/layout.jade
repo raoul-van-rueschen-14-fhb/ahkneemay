@@ -13,8 +13,11 @@ html(lang="en")
 
   block stylesheets
 
-  script(src="../js/lib/general.min.js")
-  script(src="../js/modules/history.js")
+  script(src="../js/libs/general.js")
+  script(src="../js/libs/history.min.js")
+  script(src="../js/classes/smoothmovement.js")
+  script(src="../js/modules/quickinfo.js")
+  script(src="../js/modules/move.js")
   script(src="../js/modules/stay.js")
 
   block scripts
@@ -38,5 +41,5 @@ html(lang="en")
   // Footer
   div(role="contentinfo")
    block contentinfo
+    h1#smallTitle AhKneeMay
     noscript: p.warning Warning: javascript is disabled or unavailable in your browser.
-    h1 AhKneeMay!

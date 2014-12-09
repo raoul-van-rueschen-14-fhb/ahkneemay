@@ -38,8 +38,8 @@ var general = general || {};
 
 general.Stay = (function()
 {
- var contents, navigation,
-  localEventCache = [], nextPage = null,
+ var ajax, localEventCache = [],
+  contents, navigation, nextPage = null,
   locked = false, backForward = true;
 
  /**
@@ -52,7 +52,7 @@ general.Stay = (function()
 
  function navigate(firingElement)
  {
-  var formData;
+  var formData, json;
 
   // Collect post data if the firing element is a form.
   if(firingElement.action)
@@ -67,17 +67,28 @@ general.Stay = (function()
 
   locked = true;
 
-  if(formData)
+  if(nextPage.lastIndexOf("/") === nextPage.length - 1)
   {
-   general.ajax.open("POST", nextPage + "/json", true);
-   general.ajax.timeout = 10000;
-   general.ajax.send(formData);
+   // Homepage
+   json = "json";
+   //TODO
   }
   else
   {
-   general.ajax.open("GET", nextPage + "/json", true);
-   general.ajax.timeout = 4000;
-   general.ajax.send(null);
+   json = "/json";
+  }
+
+  if(formData)
+  {
+   ajax.open("POST", nextPage + json, true);
+   ajax.timeout = 10000;
+   ajax.send(formData);
+  }
+  else
+  {
+   ajax.open("GET", nextPage + json, true);
+   ajax.timeout = 4000;
+   ajax.send(null);
   }
  }
 
@@ -89,7 +100,7 @@ general.Stay = (function()
   * @this {XMLHttpRequest}
   */
 
- function processResponse()
+ function handleResponse()
  {
   var response;
 
@@ -113,23 +124,16 @@ general.Stay = (function()
     {
      response = JSON.parse(this.responseText);
      contents.innerHTML = response.html;
-     contents.style.visibility = "visible";
-     contents.style.opacity = 1.0;
-     contents.style.transform = "scale(1.0, 1.0)";
 
-     if(navigation.innerHTML !== response.navigation)
+     if(navigation.innerText !== response.navigation)
      {
       navigation.innerHTML = response.navigation;
      }
 
-     release();
-     bind();
-
-     // Use the History API only if it's available.
-     if(History.Adapter)
-     {
-      History.pushState(null, response.title, nextPage); // this.responseURL contains "/json" at the end.
-     }
+     bindListeners();
+     general.Move.reset();
+     general.Quickinfo.reset();
+     History.pushState(null, response.title, nextPage); // this.responseURL contains "/json" at the end.
     }
     catch(e)
     {
@@ -173,45 +177,20 @@ general.Stay = (function()
  }
 
  /**
-  * Prevents every default click action for a very short time.
-  * Between releasing and re-binding all event listeners on links
-  * and forms, there's a small time gap in which the user may
-  * accidentally leave the page by furiously hammering the 
-  * mouse button. This function covers that gap.
-  */
-
- function transitionHandShake(event)
- {
-  event.preventDefault();
- }
-
- /**
-  * Unbinds all event listeners on links and forms.
-  */
-
- function release()
- {
-  var i, len, lECi;
-
-  window.addEvent(document, "click", transitionHandShake);
-
-  for(i = 0, len = localEventCache.length; i < len; ++i)
-  {
-   lECi = localEventCache[i];
-   window.removeEvent(lECi[0], lECi[1], lECi[2]);
-  }
- }
-
- /**
   * Binds event listeners to all links and forms.
-  * Always release before binding.
   */
 
- function bind()
+ function bindListeners()
  {
   var links = document.getElementsByTagName("a"),
    forms = document.getElementsByTagName("form"),
    i, len, signature;
+
+  for(i = 0, len = localEventCache.length; i < len; ++i)
+  {
+   signature = localEventCache[i];
+   window.removeEvent(signature[0], signature[1], signature[2]);
+  }
 
   for(i = 0, len = links.length; i < len; ++i)
   {
@@ -224,8 +203,6 @@ general.Stay = (function()
    signature = window.addEvent(forms[i], "submit", handlePageSwitch);
    localEventCache.push(signature);
   }
-
-  window.removeEvent(document, "click", transitionHandShake);
  }
 
  /**
@@ -255,6 +232,16 @@ general.Stay = (function()
  };
 
  /**
+  * Acts when an ajax timeout occurs.
+  */
+
+ function handleTimeout()
+ {
+  contents.innerHTML = "<h1>Error</h1><p>The server didn't respond in time. Please try again later!</p>";
+  locked = false;
+ }
+
+ /**
   * Initialization.
   */
 
@@ -263,24 +250,16 @@ general.Stay = (function()
   contents = document.getElementById("contents") || document.body;
   navigation = document.getElementById("navigation") || document.body;
 
-  // Listen to ajax ready-state changes.
-  window.addEvent(general.ajax, "readystatechange", processResponse);
-
-  // A simple listener that deals with ajax timeouts.
-  window.addEvent(general.ajax, "timeout", function()
+  if(contents && navigation)
   {
-   contents.innerHTML = "<h1>Error</h1><p>The server didn't respond in time. Please try again later!</p>";
-   locked = false;
-  });
+   ajax = window.generateAjaxObject();
+   window.addEvent(ajax, "readystatechange", handleResponse);
+   window.addEvent(ajax, "timeout", handleTimeout);
 
-  // Listen to history state changes.
-  if(History.Adapter)
-  {
-   History.Adapter.bind(window, "statechange", handleBackForward);
+   if(History.Adapter) { History.Adapter.bind(window, "statechange", handleBackForward); }
+
+   bindListeners();
   }
-
-  // First time binding all links and forms to event listeners.
-  bind();
  }
 
  // Initialized when DOM content is loaded.

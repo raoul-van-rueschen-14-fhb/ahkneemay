@@ -219,6 +219,8 @@ div[role="banner"] {
  transform: translateY(-50%);
  text-align: center;
  white-space: nowrap;
+ opacity: 1.0;
+ transition: opacity 0.5s;
 }
 
 #title h1 {
@@ -282,8 +284,9 @@ div[role="contentinfo"] h1 {
  left: 0;
  right: 0;
  padding: 2vmin;
- overflow: hidden;
- text-align: center;
+ overflow-x: hidden;
+ overflow-y: scroll;
+ text-align: left;
  border-top: 1px solid rgb(100, 30, 100);
  border-bottom: 1px solid rgb(30, 100, 100);
 }
@@ -310,7 +313,7 @@ div[role="contentinfo"] h1 {
 
 .flash {
  position: absolute;
- z-index: 7;
+ z-index: 10;
  top: 50%;
  left: 50%;
  min-width: 8vw;
@@ -332,9 +335,14 @@ div[role="contentinfo"] h1 {
 }
 
 #animes {
- height: 100%;
+ position: absolute;
+ z-index: 7;
+ top: 0;
+ left: 0;
  width: 100%;
- text-align: left;
+ padding: 1vmin;
+ margin: 0;
+ text-align: center;
  text-transform: capitalize;
 }
 
@@ -342,12 +350,13 @@ div[role="contentinfo"] h1 {
  position: relative;
  display: inline-block;
  font-size: 3vmin;
- width: 16vw;
- height: 32vh;
+ width: 260px;
+ height: 280px;
  overflow: hidden;
  background-color: black;
  vertical-align: top;
- margin: 1vmin;
+ text-align: left;
+ margin: 3vmin;
 }
 
 #animes li img {
@@ -367,17 +376,8 @@ div[role="contentinfo"] h1 {
  padding: 1vmin;
 }
 
-.infos a {
- position: absolute;
- z-index: 6;
- bottom: 1vmin;
- right: 1vmin;
- color: rgb(0, 0, 0);
- font-size: 2vmin;
-}
-
-.infos a:hover {
- color: rgb(255, 0, 0);
+#animes li:hover .infos {
+ top: 0;
 }
 
 .infos {
@@ -392,8 +392,16 @@ div[role="contentinfo"] h1 {
  transition: top 0.5s;
 }
 
-#animes li:hover .infos {
- top: 0;
+.infos a {
+ position: absolute;
+ bottom: 1vmin;
+ right: 1vmin;
+ color: rgb(0, 0, 0);
+ font-size: 2vmin;
+}
+
+.infos a:hover {
+ color: rgb(255, 0, 0);
 }
 
 /**
@@ -506,7 +514,12 @@ input[type="checkbox"]:checked {
 }
 
 .input-box input.hidden {
- display: none;
+ position: absolute;
+ width: 0;
+ height: 0;
+ margin-top: -1vmin;
+ margin-left: 21vmin;
+ opacity: 0.0;
 }
 
 .browse {

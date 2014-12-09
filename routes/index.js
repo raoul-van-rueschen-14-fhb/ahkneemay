@@ -63,7 +63,7 @@ module.exports = function(server, passport)
  server.get("/about/:json?", main.about, sendPageOrJson);
 
  // Setup a page for requesting anime infos from an external source.
- server.get("/quickinfo/:anime", main.quickinfo);
+ server.get("/animes/quickinfo/:anime", main.quickinfo);
 
  // Removes an anime.
  server.get("/animes/delete/:anime/:json?", main.removeAnime);
@@ -75,7 +75,7 @@ module.exports = function(server, passport)
  server.post("/animes/:json?", main.addAnime, sendPageOrJson);
 
  // Setup another route for the homepage to support asynchronous requests.
- server.get("/json", main.index, sendPageOrJson);
+ server.get("/:json", main.index, sendPageOrJson);
 
  // Catch all other requests and treat them as 404 errors.
  server.all("*", function(request, response, next) {
