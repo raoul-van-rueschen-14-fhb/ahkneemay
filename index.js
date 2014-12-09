@@ -13,7 +13,6 @@ var cookieParser = require("cookie-parser"),
  bodyParser = require("body-parser"),
  favicon = require("serve-favicon"),
  flash = require("connect-flash"),
- passport = require("passport"),
  express = require("express"),
  logger = require("winston"),
  multer  = require("multer"),
@@ -31,12 +30,6 @@ if(server.get("env") === "production")
  logger.add(logger.transports.File, {filename: "./logs/errors.log", json: false});
  logger.remove(logger.transports.Console);
 }
-
-// Configure passport and connect it with the db.
-//require("./config/passport")(passport);
-
-// Setup scheduled maintenance routines.
-//require("./modules/maintenance")();
 
 // Setup the template engine.
 server.set("views", path.join(__dirname, "views"));
@@ -76,19 +69,15 @@ if(server.get("env") === "development")
  server.locals.pretty = true;
 }
 
-// Start passport with persistent login sessions and use it.
-//server.use(passport.initialize());
-//server.use(passport.session());
-
-// Setup the routes and secure them with passport.
-require("./routes/index")(server, passport);
+// Setup the routes.
+require("./routes/index")(server);
 
 // Initialize AWS and start the http server afterwards.
 ahkneemay.init(false, "ahkneemay", function(error)
 {
  if(error)
  {
-  logger.log("error", "Could not start the server. Error: " + error);
+  logger.log("error", "Could not start the server. " + error);
  }
  else
  {

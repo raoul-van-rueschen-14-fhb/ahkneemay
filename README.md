@@ -10,7 +10,7 @@ Install [Node](http://nodejs.org/) first! Download this project, open the termin
 npm install
 ```
 
-Since this application relies on AWS, you'll have to provide your credentials as _aws.json_. You can find an example in the _config_ folder. You may then start the server with:
+Since this application relies on AWS, you'll have to provide your credentials in _aws.json_. There's an example in the _config_ folder. You may then start the server with:
 
 ```javascript
 node index.js

@@ -4,12 +4,11 @@
 
 "use strict";
 
-var ahkneemay;
+var ahkneemay = require("../lib/ahkneemay.js");
 
 module.exports = {
  setUp: function(done)
  {
-  ahkneemay = require("../lib/ahkneemay.js");
   done();
  },
  tearDown: function(done)
@@ -24,6 +23,8 @@ module.exports = {
   {
    test.equal(error, null, "should finish without errors under mockup conditions.");
    test.done();
+   // What happens if there IS an error? -The server will log the error and then exit.
+   // Note: Errors in private sub-methods which are used by init will bubble up.
   });
  },
  "adding an anime": function(test)

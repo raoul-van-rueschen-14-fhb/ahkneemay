@@ -20,12 +20,12 @@ module.exports = function(server, passport)
 {
  /**
   * Sends the full page or only the essential contents
-  * of the requested page plus the navigation as a single json object.
+  * of the requested page plus the navigation as a single json string.
   *
   * Single Page Support:
-  * The generated json object is smaller than the complete website and
-  * can thus be sent much faster and more efficiently. Clients will 
-  * request page contents asynchronously most of the time.
+  * The generated json string is smaller than the complete website and
+  * can thus be sent much faster and more efficiently. Most clients will 
+  * request page contents asynchronously.
   */
 
  function sendPageOrJson(request, response, next)
@@ -69,7 +69,7 @@ module.exports = function(server, passport)
  server.get("/animes/delete/:anime/:json?", main.removeAnime);
 
  // Setup a page that shows a form for adding a new anime.
- server.get("/animes/:json?", main.form, sendPageOrJson);
+ server.get("/animes/:json?", main.showForm, sendPageOrJson);
 
  // Add a new anime and redirect to the form with a status message.
  server.post("/animes/:json?", main.addAnime, sendPageOrJson);

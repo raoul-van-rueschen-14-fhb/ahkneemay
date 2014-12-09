@@ -1,5 +1,8 @@
 /**
- * These are the main routes which do not require authentication.
+ * This module defines methods which actually generate and
+ * assemble all the necessary data for each kind of request.
+ * Most of these methods utilize methods from another module,
+ * but some of them also act independently.
  *
  * @author Raoul van Rueschen
  * @version 0.0.1, 06.09.2014
@@ -47,10 +50,9 @@ module.exports.about = function(request, response, next)
 
 /**
  * An info page that uses the external "TV-Rage" API for fetching quickinfos about a given show.
- * This page is more of a workaround because ajax alone cannot request external resources, but it
- * works great.
+ * This page is more of a workaround because ajax alone cannot request external resources.
  *
- * @todo Implement caching.
+ * @todo Implement caching, maybe?
  */
 
 module.exports.quickinfo = function(request, response, next)
@@ -84,7 +86,7 @@ module.exports.quickinfo = function(request, response, next)
  * Shows a form for adding an anime.
  */
 
-module.exports.form = function(request, response, next)
+module.exports.showForm = function(request, response, next)
 {
  response.locals.jade = {};
  response.locals.jade.template = "form";
