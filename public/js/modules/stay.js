@@ -39,8 +39,8 @@ var general = general || {};
 general.Stay = (function()
 {
  var ajax, localEventCache = [],
-  contents, navigation, nextPage = null,
-  locked = false, backForward = true;
+  contents, navigation, title, smallTitle, 
+  nextPage = null, locked = false, backForward = true;
 
  /**
   * Uses ajax to request pages.
@@ -52,7 +52,7 @@ general.Stay = (function()
 
  function navigate(firingElement)
  {
-  var formData, json;
+  var formData, postfix;
 
   // Collect post data if the firing element is a form.
   if(firingElement.action)
@@ -70,25 +70,68 @@ general.Stay = (function()
   if(nextPage.lastIndexOf("/") === nextPage.length - 1)
   {
    // Homepage
-   json = "json";
-   //TODO
+   postfix = "json";
+   title.style.opacity = 1.0;
+   smallTitle.style.opacity = 0.0;
   }
   else
   {
-   json = "/json";
+   postfix = "/json";
+   title.style.opacity = 0.0;
+   smallTitle.style.opacity = 1.0;
   }
 
   if(formData)
   {
-   ajax.open("POST", nextPage + json, true);
+   ajax.open("POST", nextPage + postfix, true);
    ajax.timeout = 10000;
    ajax.send(formData);
   }
   else
   {
-   ajax.open("GET", nextPage + json, true);
+   ajax.open("GET", nextPage + postfix, true);
    ajax.timeout = 4000;
    ajax.send(null);
+  }
+ }
+
+ /**
+  * This function is bound to all links and forms
+  * and executes the desired page navigation on left clicks.
+  *
+  * The context in which this function is called allows access
+  * to all attributes of the respective "a" or "submit" element.
+  *
+  * @this {HTMLElement}
+  */
+
+ function handlePageSwitch(event)
+ {
+  var isRightClick = false;
+
+  event.preventDefault();
+
+  if(event.which)
+  {
+   isRightClick = (event.which === 3);
+  }
+  else if(event.button)
+  {
+   isRightClick = (event.button === 2);
+  }
+
+  if(!isRightClick && !locked)
+  {
+   if(this.id === "closeFlash")
+   {
+    this.parentNode.parentNode.removeChild(this.parentNode);
+    updateListeners();
+   }
+   else
+   {
+    backForward = false;
+    navigate(this);
+   }
   }
  }
 
@@ -102,7 +145,7 @@ general.Stay = (function()
 
  function handleResponse()
  {
-  var response;
+  var response, i, len, children, anon;
 
   if(this.readyState === 4)
   {
@@ -123,21 +166,46 @@ general.Stay = (function()
     try
     {
      response = JSON.parse(this.responseText);
-     contents.innerHTML = response.html;
 
-     if(navigation.innerText !== response.navigation)
+     while(contents.children.length > 0)
      {
-      navigation.innerHTML = response.navigation;
+      contents.removeChild(contents.children[0]);
      }
 
-     bindListeners();
+     while(navigation.children.length > 0)
+     {
+      navigation.removeChild(navigation.children[0]);
+     }
+
+     anon = document.createElement("div");
+     anon.innerHTML = response.contents;
+
+     if(anon.children.length > 0)
+     {
+      title.style.opacity = 0.0;
+      smallTitle.style.opacity = 1.0;
+     }
+
+     while(anon.children.length > 0)
+     {
+      contents.appendChild(anon.children[0]);
+     }
+
+     anon.innerHTML = response.navigation;
+
+     while(anon.children.length > 0)
+     {
+      navigation.appendChild(anon.children[0]);
+     }
+
+     updateListeners();
      general.Move.reset();
      general.Quickinfo.reset();
      History.pushState(null, response.title, nextPage); // this.responseURL contains "/json" at the end.
     }
     catch(e)
     {
-     contents.innerHTML = "<h1>Error</h1><p>" + e.message + "</p>";
+     contents.innerHTML = "<h1>Error</h1><p>" + e.stack + "</p>";
     }
    }
 
@@ -146,41 +214,42 @@ general.Stay = (function()
  };
 
  /**
-  * This function is bound to all links and forms
-  * and executes the desired page navigation on left clicks.
-  *
-  * The context in which this function is called allows access
-  * to all attributes of the respective "a" or "submit" element.
-  *
-  * @this {HTMLElement}
+  * Support browser functionality "back" and "forward".
+  * Depends on the boolean variable backForward in order to
+  * determine whether this navigation should be executed.
   */
 
- function handlePageSwitch(event)
+ function handleBackForward()
  {
-  var isRightClick = false;
+  var state = History.getState();
 
-  if(event.which)
+  if(backForward)
   {
-   isRightClick = (event.which === 3);
+   navigate({href: state.cleanUrl});
   }
-  else if(event.button)
+  else
   {
-   isRightClick = (event.button === 2);
+   backForward = true;
   }
+ };
 
-  if(!isRightClick && !locked)
-  {
-   event.preventDefault();
-   backForward = false;
-   navigate(this);
-  }
+ /**
+  * Acts when an ajax timeout occurs.
+  */
+
+ function handleTimeout()
+ {
+  contents.innerHTML = "<h1>Error</h1><p>The server didn't respond in time. Please try again later!</p>";
+  locked = false;
  }
 
  /**
   * Binds event listeners to all links and forms.
+  * This method is combined with the cleanup and 
+  * essentially refreshes the listeners.
   */
 
- function bindListeners()
+ function updateListeners()
  {
   var links = document.getElementsByTagName("a"),
    forms = document.getElementsByTagName("form"),
@@ -206,59 +275,52 @@ general.Stay = (function()
  }
 
  /**
-  * Support browser functionality "back" and "forward".
-  * Depends on the boolean variable backForward in order to
-  * determine whether this navigation should be executed.
-  */
-
- function handleBackForward()
- {
-  var state = History.getState();
-
-  if(backForward)
-  {
-   if(state.hash !== "/")
-   {
-    navigate({href: state.cleanUrl});
-   }
-   else
-   {
-   }
-  }
-  else
-  {
-   backForward = true;
-  }
- };
-
- /**
-  * Acts when an ajax timeout occurs.
-  */
-
- function handleTimeout()
- {
-  contents.innerHTML = "<h1>Error</h1><p>The server didn't respond in time. Please try again later!</p>";
-  locked = false;
- }
-
- /**
   * Initialization.
   */
 
  function init()
  {
+  var h1, h2;
+
   contents = document.getElementById("contents") || document.body;
   navigation = document.getElementById("navigation") || document.body;
+
+  title = document.getElementById("title");
+  smallTitle = document.getElementById("smallTitle");
+
+  if(!title)
+  {
+   title = document.createElement("div");
+   title.id = "title";
+   h1 = document.createElement("h1");
+   h1.appendChild(document.createTextNode("AhKneeMay!"));
+   h2 = document.createElement("h2");
+   h2.appendChild(document.createTextNode("Remembers your watched Animes"));
+   title.appendChild(h1);
+   title.appendChild(h2);
+   title.style.opacity = 0.0;
+   document.getElementById("banner").appendChild(title);
+  }
+
+  title.style.opacity = 0.0;
+
+  if(!smallTitle)
+  {
+   smallTitle = document.createElement("h1");
+   smallTitle.id = "smallTitle";
+   smallTitle.appendChild(document.createTextNode("AhKneeMay!"));
+   title.style.opacity = 0.0;
+   document.getElementById("contentinfo").appendChild(smallTitle);
+  }
 
   if(contents && navigation)
   {
    ajax = window.generateAjaxObject();
    window.addEvent(ajax, "readystatechange", handleResponse);
    window.addEvent(ajax, "timeout", handleTimeout);
-
    if(History.Adapter) { History.Adapter.bind(window, "statechange", handleBackForward); }
 
-   bindListeners();
+   updateListeners();
   }
  }
 

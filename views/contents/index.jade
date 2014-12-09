@@ -7,22 +7,22 @@ if(animes)
   each anime in animes
    li
     img(src="#{cloudFront}#{anime.img.S}" alt="Picture of #{anime.title.S}")
-    h1= anime.title.S
+    h1(title="#{anime.title.S}")= anime.title.S
     div.infos
      a(href="/animes/delete/#{anime.title.S}") Remove
      if(anime.author)
       div
        label Author:
-       span= anime.author.S
+       span(title="#{anime.author.S}")= anime.author.S
      if(anime.publisher)
       div
        label Publisher:
-       span= anime.publisher.S
+       span(title="#{anime.publisher.S}")= anime.publisher.S
      if(anime.year)
       div
        label Year:
-       span= anime.year.N
+       span(title="#{anime.year.N}")= anime.year.N
      if(anime.seasons)
       div
        label Seasons:
-       span= anime.seasons.N
+       span(title="#{anime.seasons.N}")= anime.seasons.N

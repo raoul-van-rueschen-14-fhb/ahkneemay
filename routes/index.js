@@ -43,7 +43,7 @@ module.exports = function(server, passport)
    compiledTemplates.navigation = compiledTemplates.navigation || jade.compileFile(path.join(server.get("views"), "contents/navigation.jade"));
    rawContents.navigation = compiledTemplates.navigation(locals);
    compiledTemplates[template] = compiledTemplates[template] || jade.compileFile(path.join(server.get("views"), "contents", template + ".jade"));
-   rawContents.html = compiledTemplates[template](locals);
+   rawContents.contents = compiledTemplates[template](locals);
 
    response.writeHead(200, {"Content-Type": "application/json"});
    response.end(JSON.stringify(rawContents));

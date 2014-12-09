@@ -4,12 +4,19 @@ A web server that keeps track of your watched animes by storing information in t
 
 ## Running the Server
 
-Download the project, open the terminal or command line and navigate to the project's root directory. Then fetch dependencies and start the server with:
+Install [Node](http://nodejs.org/) first! Download this project, open the terminal or command line and navigate to the project's root directory. Then fetch dependencies with:
 
 ```javascript
 npm install
+```
+
+Since this application relies on AWS, you'll have to provide your credentials as _aws.json_. You can find an example in the _config_ folder. You may then start the server with:
+
+```javascript
 node index.js
 ```
+
+The server will listen on port 8080. If you wish to run this project behind a proxy, you'll have to [configure Node manually](http://jjasonclark.com/how-to-setup-node-behind-web-proxy).
 
 ## Documentation
 _(Coming soon)_

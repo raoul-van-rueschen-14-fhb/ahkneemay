@@ -159,10 +159,10 @@ general.Quickinfo = (function()
  }
 
  /**
-  * Binds event listeners and stores their signatures.
+  * Cleans up all event listeners.
   */
 
- function bindListeners()
+ function unbindListeners()
  {
   var i, len, signature;
 
@@ -171,7 +171,14 @@ general.Quickinfo = (function()
    signature = localEventCache[i];
    window.removeEvent(signature[0], signature[1], signature[2]);
   }
+ }
 
+ /**
+  * Binds event listeners and stores their signatures.
+  */
+
+ function bindListeners()
+ {
   localEventCache.push(window.addEvent(inputTitle, "blur", fetchInfos));
   localEventCache.push(window.addEvent(inputImage, "change", updateSelectedFile));
  }
@@ -188,6 +195,8 @@ general.Quickinfo = (function()
   inputPublisher = document.getElementById("inputPublisher");
   selectedFile = document.getElementById("selectedFile");
   inputImage = document.getElementById("inputImage");
+
+  unbindListeners();
 
   // Only proceed if the crucial elements exist in the current view.
   if(inputTitle && inputYear && inputSeasons && inputPublisher && selectedFile && inputImage)

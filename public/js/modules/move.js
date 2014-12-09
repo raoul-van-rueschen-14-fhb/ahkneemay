@@ -37,6 +37,7 @@ general.Move = (function()
   element = null, animId = 0, then = 0,
   origin = {x: 0, y: 0},
   offsets = {x: 0, y: 0},
+  displacements = {x: 0, y: 0},
   currentPos = {x: 0, y: 0},
   movement = {
    x: new general.SmoothMovement(),
@@ -48,7 +49,7 @@ general.Move = (function()
   };
 
  /**
-  * Computes the next offsets and moves the screen
+  * Computes the displacement and moves the screen
   * to the target location.
   */
 
@@ -57,13 +58,24 @@ general.Move = (function()
   var x = movement.x.update(),
   y = movement.y.update();
 
-  offsets.x = (x - currentPos.x);
-  offsets.y = (y - currentPos.y);
+  displacements.x = (x - currentPos.x);
+  displacements.y = (y - currentPos.y);
   currentPos.x = x;
   currentPos.y = y;
 
-  element.style.left = element.offsetLeft + offsets.x + "px";
-  element.style.top = element.offsetTop + offsets.y + "px";
+  element.style.transform = "translate(" + currentPos.x + "px, " + currentPos.y + "px)";
+ }
+
+ /**
+  * Makes sure that the new target values are properly restricted.
+  */
+
+ function respectBoundaries()
+ {
+  if(movement.x.target > limits.x.max) { movement.x.target = limits.x.max; }
+  if(movement.x.target < limits.x.min) { movement.x.target = limits.x.min; }
+  if(movement.y.target > limits.y.max) { movement.y.target = limits.y.max; }
+  if(movement.y.target < limits.y.min) { movement.y.target = limits.y.min; }
  }
 
  /**
@@ -92,10 +104,7 @@ general.Move = (function()
     movement.y.target += (event.clientY - origin.y) << 1;
    }
 
-   if(movement.x.target > limits.x.max) { movement.x.target = limits.x.max; }
-   if(movement.x.target < limits.x.min) { movement.x.target = limits.x.min; }
-   if(movement.y.target > limits.y.max) { movement.y.target = limits.y.max; }
-   if(movement.y.target < limits.y.min) { movement.y.target = limits.y.min; }
+   respectBoundaries();
 
    origin.x = event.clientX;
    origin.y = event.clientY;
@@ -141,37 +150,37 @@ general.Move = (function()
  }
 
  /**
-  * Sets the movement boundaries based on the positions and sizes of the children of #animes.
+  * Modifies the target position based on mouse wheel scrolling.
+  */
+
+ function mScroll(event)
+ {
+  movement.x.target += event.deltaX;
+  movement.y.target -= event.deltaY;
+  respectBoundaries();
+ }
+
+ /**
+  * Sets the movement boundaries based on the positions and sizes of the 
+  * children of the moveable element. Takes the dimensions of the parent
+  * container and the screen size into account.
   */
 
  function setupScreen()
  {
-  var i, res, len, child, children = element.children;
+  var i, res, len, boundaries = {x: 0, y: 0},
+   parent = element.parentNode, screenSize;
 
   window.cancelAnimationFrame(animId);
-  animId = 0;
 
   screenSize = window.getScreenSize();
+  boundaries.x = parent ? parent.offsetWidth : screenSize.width;
+  boundaries.y = parent ? parent.offsetHeight : screenSize.height;
 
-  //limits.x.min = -20;
-  //limits.x.max = 20;
-  limits.y.min = -20;
-  limits.y.max = 20;
-
-  for(i = 0, len = children.length; i < len; ++i)
-  {
-   child = children[i];
-
-   res = ~((child.offsetLeft + child.offsetWidth) - screenSize.width);
-   if(res < limits.x.min) { limits.x.min = res; }
-   res = ~child.offsetLeft;
-   if(res > limits.x.max) { limits.x.max = res; }
-
-   res = ~((child.offsetTop + child.offsetHeight + (child.offsetHeight >> 1)) - screenSize.height);
-   if(res < limits.y.min) { limits.y.min = res; }
-   res = ~child.offsetTop;
-   if(res > limits.y.max) { limits.y.max = res; }
-  }
+  limits.x.min = ~(offsets.x + element.offsetWidth - boundaries.x);
+  limits.x.max = ~offsets.x;
+  limits.y.min = ~(offsets.y + element.offsetHeight - boundaries.y);
+  limits.y.max = ~offsets.y;
 
   animId = window.requestAnimationFrame(update);
  }
@@ -191,10 +200,10 @@ general.Move = (function()
  }
 
  /**
-  * Binds event listeners and stores their signatures.
+  * Cleans up all event listeners.
   */
 
- function bindListeners()
+ function unbindListeners()
  {
   var i, len, signature;
 
@@ -203,10 +212,18 @@ general.Move = (function()
    signature = localEventCache[i];
    window.removeEvent(signature[0], signature[1], signature[2]);
   }
+ }
 
+ /**
+  * Binds event listeners and stores their signatures.
+  */
+
+ function bindListeners()
+ {
   localEventCache.push(window.addEvent(document, "mousemove", mMove));
   localEventCache.push(window.addEvent(document, "mousedown", mDown));
   localEventCache.push(window.addEvent(document, "mouseup", mUp));
+  localEventCache.push(window.addEvent(window, "mousewheel", mScroll));
   localEventCache.push(window.addEvent(window, "resize", setupScreen));
  }
 
@@ -219,11 +236,18 @@ general.Move = (function()
   var contents = document.getElementById("contents");
   element = document.getElementById("animes");
 
-  // No need for a scroll bar if you have javascript.
+  window.cancelAnimationFrame(animId);
+  unbindListeners();
+  movement.x.reset();
+  movement.y.reset();
+
   if(contents) { contents.style.overflowY = "hidden"; }
 
   if(element)
   {
+   element.className = "moveable";
+   offsets.x = element.offsetLeft;
+   offsets.y = element.offsetTop;
    bindListeners();
    setupScreen();
   }

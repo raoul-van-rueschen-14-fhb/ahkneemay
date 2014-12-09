@@ -272,8 +272,21 @@ div[role="contentinfo"] {
  background-color: rgba(0, 0, 0, 0.1);
 }
 
-div[role="contentinfo"] h1 {
+div[role="contentinfo"] h1,
+div[role="contentinfo"] h2 {
+ position: absolute;
+ top: 0;
  font-size: 3vmin;
+}
+
+div[role="contentinfo"] h2 {
+ text-align: right;
+ right: 8vmin;
+}
+
+#smallTitle {
+ opacity: 1.0;
+ transition: opacity 0.5s;
 }
 
 #contents {
@@ -285,7 +298,7 @@ div[role="contentinfo"] h1 {
  right: 0;
  padding: 2vmin;
  overflow-x: hidden;
- overflow-y: scroll;
+ overflow-y: auto;
  text-align: left;
  border-top: 1px solid rgb(100, 30, 100);
  border-bottom: 1px solid rgb(30, 100, 100);
@@ -339,24 +352,36 @@ div[role="contentinfo"] h1 {
  z-index: 7;
  top: 0;
  left: 0;
- width: 100%;
+ right: 0;
  padding: 1vmin;
  margin: 0;
  text-align: center;
  text-transform: capitalize;
 }
 
+.moveable {
+ cursor: grab;
+ cursor: -moz-grab;
+ cursor: -webkit-grab;
+}
+
+.moveable:active {
+ cursor: grabbing;
+ cursor: -moz-grabbing;
+ cursor: -webkit-grabbing;
+}
+
 #animes li {
  position: relative;
  display: inline-block;
- font-size: 3vmin;
- width: 260px;
- height: 280px;
+ width: 20vw;
+ height: 40vh;
  overflow: hidden;
  background-color: black;
  vertical-align: top;
  text-align: left;
  margin: 3vmin;
+ cursor: auto;
 }
 
 #animes li img {
@@ -364,16 +389,18 @@ div[role="contentinfo"] h1 {
  height: 100%;
 }
 
-#animes h1 {
+#animes li h1 {
  position: absolute;
  z-index: 7;
- bottom: 0;
+ bottom: -1px;
  left: 0;
  right: 0;
  background-color: rgb(20, 100, 100);
  color: rgb(240, 240, 240);
  font-size: 3vmin;
  padding: 1vmin;
+ white-space: nowrap;
+ overflow: hidden;
 }
 
 #animes li:hover .infos {
@@ -383,18 +410,31 @@ div[role="contentinfo"] h1 {
 .infos {
  position: absolute;
  z-index: 6;
- top: 260px;
+ top: 100%;
  left: 0;
  right: 0;
- bottom: 5vmin;
+ bottom: 0;
  padding: 1vmin;
- background-color: rgb(20, 80, 80);
- transition: top 0.5s;
+ background-color: rgba(20, 80, 80, 0.95);
+ transition: top 0.25s;
+}
+
+.infos label {
+ font-size: 2.3vmin;
+ vertical-align: middle;
+ color: rgb(160, 160, 160);
+ padding-right: 1vmin;
+}
+
+.infos span {
+ font-size: 2.8vmin;
+ color: rgb(220, 220, 220);
+ white-space: nowrap;
 }
 
 .infos a {
  position: absolute;
- bottom: 1vmin;
+ top: 80%;
  right: 1vmin;
  color: rgb(0, 0, 0);
  font-size: 2vmin;

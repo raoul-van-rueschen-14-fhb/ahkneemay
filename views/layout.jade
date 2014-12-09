@@ -25,7 +25,7 @@ html(lang="en")
  body
 
   // Banner
-  div(role="banner")
+  div(role="banner" id="banner")
    block banner
 
   // Primary Contents
@@ -33,13 +33,15 @@ html(lang="en")
    block main
 
   // Aside
-  div(role="complementary")
+  div(role="complementary" id="complementary")
    block complementary
     ul#navigation
      include ./contents/navigation.jade
 
   // Footer
-  div(role="contentinfo")
+  div(role="contentinfo" id="contentinfo")
    block contentinfo
-    h1#smallTitle AhKneeMay
-    noscript: p.warning Warning: javascript is disabled or unavailable in your browser.
+    h1#smallTitle AhKneeMay!
+    noscript Warning: javascript is disabled or unavailable in your browser.
+    //-if(totalAnimes)
+     //-h2 Watched Animes: #{totalAnimes}

@@ -32,6 +32,16 @@ general.SmoothMovement = function(position, target)
 };
 
 /**
+ * Sets the current position and target to 0.
+ */
+
+general.SmoothMovement.prototype.reset = function()
+{
+ this.position = 0;
+ this.target = 0;
+};
+
+/**
  * Updates the position an velocity for this SmoothMovement
  *
  * @return The new position.

@@ -49,6 +49,8 @@ module.exports.about = function(request, response, next)
  * An info page that uses the external "TV-Rage" API for fetching quickinfos about a given show.
  * This page is more of a workaround because ajax alone cannot request external resources, but it
  * works great.
+ *
+ * @todo Implement caching.
  */
 
 module.exports.quickinfo = function(request, response, next)

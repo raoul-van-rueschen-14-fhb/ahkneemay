@@ -94,7 +94,7 @@ ahkneemay.init(false, "ahkneemay", function(error)
  {
   // Start the server.
   httpServer = http.createServer(server);
-  httpServer.listen(80, function()
+  httpServer.listen(8080, function()
   {
    var timeString;
 
