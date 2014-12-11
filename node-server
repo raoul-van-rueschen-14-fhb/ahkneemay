@@ -48,7 +48,7 @@ is_running() {
 update_it() {
 		echo "Updating the server..."
 		git --git-dir="$APP_DIR/.git" pull origin master
-    npm install
+    (cd "$APP_DIR" && npm install)
 		echo "Server is now up-to-date."
 }
 
