@@ -28,7 +28,15 @@ module.exports.index = function(request, response, next)
   message: request.flash("info")
  };
 
- ahkneemay.listAnimes(response.locals.jade.locals, next);
+ try
+ {
+  ahkneemay.listAnimes(response.locals.jade.locals, next);
+ }
+ catch(e)
+ {
+  e.status = 503;
+  next(e);
+ }
 };
 
 /**
@@ -77,7 +85,7 @@ module.exports.quickinfo = function(request, response, next)
  apiCall.on("error", function(error)
  {
   responseText = error.message;
-  response.writeHead(500, {"Content-Type": "text/plain"});
+  response.writeHead(503, {"Content-Type": "text/plain"});
   response.end(responseText);
  });
 };
@@ -115,11 +123,19 @@ module.exports.addAnime = function(request, response, next)
   img: request.files.image
  };
 
- ahkneemay.addAnime(anime, function(error, result)
+ try
  {
-  request.flash("info", error ? error.message : result);
-  response.redirect(request.params.json ? "/animes/json" : "/animes");
- });
+  ahkneemay.addAnime(anime, function(error, result)
+  {
+   request.flash("info", error ? error.message : result);
+   response.redirect(request.params.json ? "/animes/json" : "/animes");
+  });
+ }
+ catch(e)
+ {
+  e.status = 503;
+  next(e);
+ }
 };
 
 /**
@@ -130,9 +146,17 @@ module.exports.removeAnime = function(request, response, next)
 {
  var anime = request.params.anime;
 
- ahkneemay.removeAnime(anime, function(error, result)
+ try
  {
-  request.flash("info", error ? error.message : result);
-  response.redirect(request.params.json ? "/json" : "/");
- });
+  ahkneemay.removeAnime(anime, function(error, result)
+  {
+   request.flash("info", error ? error.message : result);
+   response.redirect(request.params.json ? "/json" : "/");
+  });
+ }
+ catch(e)
+ {
+  e.status = 503;
+  next(e);
+ }
 };

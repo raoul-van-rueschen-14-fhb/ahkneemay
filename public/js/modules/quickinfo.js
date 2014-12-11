@@ -134,19 +134,21 @@ general.Quickinfo = (function()
 
  function updateSelectedFile()
  {
-  var splinters, file;
+  var splinters, value, index;
 
-  if(inputImage.value)
+  value = "No file chosen";
+  selectedFile.removeChild(selectedFile.firstChild);
+
+  if(inputImage.files.length)
   {
-   splinters = inputImage.value.split("\\");
-   file = splinters[splinters.length - 1];
-   file = file.slice(0, file.lastIndexOf("."));
-   selectedFile.innerText = file.length > 10 ? file.slice(0, 9) + "..." : file;
+   splinters = inputImage.files[0].name.split("\\");
+   value = splinters[splinters.length - 1];
+   index = value.lastIndexOf(".");
+   if(index > -1) { value = value.slice(0, index); }
+   if(value.length > 10) { value = value.slice(0, 9) + "..."; }
   }
-  else
-  {
-   selectedFile.innerText = "No file chosen";
-  }
+
+  selectedFile.appendChild(document.createTextNode(value));
  }
 
  /**

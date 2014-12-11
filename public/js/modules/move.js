@@ -155,8 +155,9 @@ general.Move = (function()
 
  function mScroll(event)
  {
-  movement.x.target += event.deltaX;
-  movement.y.target -= event.deltaY;
+  event.preventDefault();
+  movement.x.target -= event.detail ? event.detail * 120 : event.deltaX;
+  movement.y.target -= event.detail ? event.detail * 120 : event.deltaY;
   respectBoundaries();
  }
 
@@ -181,6 +182,12 @@ general.Move = (function()
   limits.x.max = ~offsets.x;
   limits.y.min = ~(offsets.y + element.offsetHeight - boundaries.y);
   limits.y.max = ~offsets.y;
+
+  // Prevent very small movements.
+  if(Math.abs(limits.x.min) < 20) { limits.x.min = 0; }
+  if(Math.abs(limits.x.max) < 20) { limits.x.max = 0; }
+  if(Math.abs(limits.y.min) < 20) { limits.y.min = 0; }
+  if(Math.abs(limits.y.max) < 20) { limits.y.max = 0; }
 
   animId = window.requestAnimationFrame(update);
  }
@@ -224,6 +231,7 @@ general.Move = (function()
   localEventCache.push(window.addEvent(document, "mousedown", mDown));
   localEventCache.push(window.addEvent(document, "mouseup", mUp));
   localEventCache.push(window.addEvent(window, "mousewheel", mScroll));
+  localEventCache.push(window.addEvent(window, "DOMMouseScroll", mScroll));
   localEventCache.push(window.addEvent(window, "resize", setupScreen));
  }
 

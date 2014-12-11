@@ -10,9 +10,10 @@
  * 05. Anchors and Navigation
  * 06. Page Structure
  * 07. Forms and Input
+ * 08. Anime Gallery
  *
  * @author Raoul van Rueschen
- * @version 0.0.1, 31.10.2014
+ * @version 0.1.0, 11.12.2014
  */
 
 /**
@@ -347,103 +348,6 @@ div[role="contentinfo"] h2 {
  display: block;
 }
 
-#animes {
- position: absolute;
- z-index: 7;
- top: 0;
- left: 0;
- right: 0;
- padding: 1vmin;
- margin: 0;
- text-align: center;
- text-transform: capitalize;
-}
-
-.moveable {
- cursor: grab;
- cursor: -moz-grab;
- cursor: -webkit-grab;
-}
-
-.moveable:active {
- cursor: grabbing;
- cursor: -moz-grabbing;
- cursor: -webkit-grabbing;
-}
-
-#animes li {
- position: relative;
- display: inline-block;
- width: 20vw;
- height: 40vh;
- overflow: hidden;
- background-color: black;
- vertical-align: top;
- text-align: left;
- margin: 3vmin;
- cursor: auto;
-}
-
-#animes li img {
- width: 100%;
- height: 100%;
-}
-
-#animes li h1 {
- position: absolute;
- z-index: 7;
- bottom: -1px;
- left: 0;
- right: 0;
- background-color: rgb(20, 100, 100);
- color: rgb(240, 240, 240);
- font-size: 3vmin;
- padding: 1vmin;
- white-space: nowrap;
- overflow: hidden;
-}
-
-#animes li:hover .infos {
- top: 0;
-}
-
-.infos {
- position: absolute;
- z-index: 6;
- top: 100%;
- left: 0;
- right: 0;
- bottom: 0;
- padding: 1vmin;
- background-color: rgba(20, 80, 80, 0.95);
- transition: top 0.25s;
-}
-
-.infos label {
- font-size: 2.3vmin;
- vertical-align: middle;
- color: rgb(160, 160, 160);
- padding-right: 1vmin;
-}
-
-.infos span {
- font-size: 2.8vmin;
- color: rgb(220, 220, 220);
- white-space: nowrap;
-}
-
-.infos a {
- position: absolute;
- top: 80%;
- right: 1vmin;
- color: rgb(0, 0, 0);
- font-size: 2vmin;
-}
-
-.infos a:hover {
- color: rgb(255, 0, 0);
-}
-
 /**
  * 07. Forms and Input
  */
@@ -551,6 +455,8 @@ input[type="checkbox"]:checked {
 
 .input-box label {
  display: inline-block;
+ overflow: hidden;
+ text-overflow: ellipsis;
 }
 
 .input-box input.hidden {
@@ -566,4 +472,111 @@ input[type="checkbox"]:checked {
  margin: 0.5vh 0;
  cursor: pointer;
  text-align: center;
+}
+
+/**
+ * 08. Anime Gallery
+ */
+
+#animes {
+ position: absolute;
+ z-index: 7;
+ top: 0;
+ left: 0;
+ right: 0;
+ padding: 1vmin;
+ margin: 0;
+ text-align: center;
+ text-transform: capitalize;
+}
+
+.moveable {
+ cursor: grab;
+ cursor: -moz-grab;
+ cursor: -webkit-grab;
+}
+
+.moveable:active {
+ cursor: grabbing;
+ cursor: -moz-grabbing;
+ cursor: -webkit-grabbing;
+}
+
+#animes li {
+ position: relative;
+ display: inline-block;
+ width: 20vw;
+ height: 40vh;
+ overflow: hidden;
+ background-color: transparent;
+ vertical-align: top;
+ text-align: left;
+ margin: 3vmin;
+ cursor: auto;
+}
+
+#animes li img {
+ width: 100%;
+ height: 100%;
+}
+
+#animes li h1 {
+ position: absolute;
+ z-index: 7;
+ bottom: -1px;
+ left: 0;
+ right: 0;
+ background-color: rgb(20, 100, 100);
+ color: rgb(240, 240, 240);
+ font-size: 3vmin;
+ padding: 1vmin;
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+#animes li:hover .infos {
+ top: 0;
+}
+
+.infos {
+ position: absolute;
+ z-index: 6;
+ top: 100%;
+ left: 0;
+ right: 0;
+ bottom: 0;
+ padding: 1vmin;
+ background-color: rgba(20, 80, 80, 0.95);
+ transition: top 0.25s;
+ white-space: nowrap;
+}
+
+.infos div {
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
+.infos label {
+ font-size: 2.3vmin;
+ vertical-align: middle;
+ color: rgb(160, 160, 160);
+ padding-right: 1vmin;
+}
+
+.infos span {
+ font-size: 2.8vmin;
+ color: rgb(220, 220, 220);
+}
+
+.infos a {
+ position: absolute;
+ top: 80%;
+ right: 1vmin;
+ color: rgb(0, 0, 0);
+ font-size: 2vmin;
+}
+
+.infos a:hover {
+ color: rgb(255, 0, 0);
 }

@@ -2,7 +2,7 @@
 
 NODE_ENV="production"
 PORT="8080"
-APP_DIR="/home/ubuntu/server"
+APP_DIR="/home/ubuntu/ahkneemay"
 NODE_APP="index.js"
 CONFIG_DIR="$APP_DIR"
 PID_DIR="$APP_DIR/pid"
@@ -45,6 +45,13 @@ is_running() {
     ! [ -z "$(ps ef | awk '{print $1}' | grep "^$PID$")" ]
 }
 
+update_it() {
+		echo "Updating the server..."
+		git --git-dir="$APP_DIR/.git" pull origin master
+    npm install
+		echo "Server is now up-to-date."
+}
+
 start_it() {
     mkdir -p "$PID_DIR"
     mkdir -p "$LOG_DIR"
@@ -80,10 +87,12 @@ start_app() {
             then
                 echo "Forcing start anyways"
                 remove_pid_file
+								update_it
                 start_it
             fi
         fi
     else
+				update_it
         start_it
     fi
 }
