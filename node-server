@@ -57,7 +57,7 @@ start_it() {
     mkdir -p "$LOG_DIR"
 
     echo "Starting node app ..."
-    nodejs "$APP_DIR/$NODE_APP $PORT $NODE_ENV"  1>"$LOG_FILE" 2>&1 &
+    nodejs "$APP_DIR/$NODE_APP" "$PORT" "$NODE_ENV"  1>"$LOG_FILE" 2>&1 &
     echo $! > "$PID_FILE"
     echo "Node app started with pid $!"
 }
