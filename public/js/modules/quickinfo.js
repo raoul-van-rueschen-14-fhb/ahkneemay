@@ -51,7 +51,7 @@ general.Quickinfo = (function()
   if(title.length > 3 && title !== lastTitle)
   {
    locked = true;
-   ajax.open("GET", "/animes/quickinfo/" + title, true);
+   ajax.open("GET", "/animes/quickinfo/" + encodeURIComponent(title), true);
    ajax.timeout = 10000;
    ajax.send(null);
   }

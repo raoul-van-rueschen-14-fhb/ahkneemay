@@ -20,14 +20,17 @@ var cookieParser = require("cookie-parser"),
  path = require("path"),
  server = express(),
  httpServer,
- startTime;
+ startTime,
+ args;
 
-//server.set("env", "production");
+args = process.argv.slice(2);
+server.set("port", (args[0] ? args[0] : 80));
+server.set("env", (args[1] ? args[1] : "development"));
 
 // Setup logging to a log file. (Only for production.)
 if(server.get("env") === "production")
 {
- logger.add(logger.transports.File, {filename: "./logs/errors.log", json: false});
+ logger.add(logger.transports.File, {filename: "./logs/server.log", json: false});
  logger.remove(logger.transports.Console);
 }
 
@@ -83,7 +86,7 @@ ahkneemay.init(false, "ahkneemay", function(error)
  {
   // Start the server.
   httpServer = http.createServer(server);
-  httpServer.listen(8080, function()
+  httpServer.listen(server.get("port"), function()
   {
    var timeString;
 
@@ -92,7 +95,7 @@ ahkneemay.init(false, "ahkneemay", function(error)
                 startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds()
 
    logger.log("info", "Start time: " + timeString);
-   logger.log("info", "HTTP-Server is now running.");
+   logger.log("info", "HTTP-Server is now running on port " + server.get("port"));
   });
  }
 });
