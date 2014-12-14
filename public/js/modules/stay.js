@@ -1,28 +1,14 @@
 /**
  * Copyright (c) 2014 Raoul van Rueschen
- * 
- * This software is provided 'as-is', without any express or implied
- * warranty. In no event will the authors be held liable for any damages
- * arising from the use of this software.
- * 
- * Permission is granted to anyone to use this software for any purpose,
- * including commercial applications, and to alter it and redistribute it
- * freely, subject to the following restrictions:
- *  1. The origin of this software must not be misrepresented; you must not
- *     claim that you wrote the original software. If you use this software
- *     in a product, an acknowledgment in the product documentation would be
- *     appreciated but is not required.
- *  2. Altered source versions must be plainly marked as such, and must not be
- *     misrepresented as being the original software.
- *  3. This notice may not be removed or altered from any source distribution.
-
+ * Licensed under the Zlib license.
+ *
  * @author Raoul van Rueschen
- * @version 0.0.1, 10.10.2014
+ * @version 0.1.4, 10.10.2014
  */
 
 var general = general || {};
 
-(function(undefined, window, document, general)
+(function(window, document, general)
 {
  "use strict";
 
@@ -40,19 +26,19 @@ general.Stay = (function()
 {
  var ajax, localEventCache = [],
   contents, navigation, title, smallTitle, 
-  nextPage = null, locked = false, backForward = true;
+  postfix = null, locked = false, backForward = true;
 
  /**
   * Uses ajax to request pages.
   * Locks the whole system until the response has
   * been received and processed.
   * 
-  * @param {HTMLElement} firingElement A registered element whose click event was triggered.
+  * @param {HTMLElement} firingElement - A registered element whose click event was triggered.
   */
 
  function navigate(firingElement)
  {
-  var formData, postfix;
+  var formData, nextPage;
 
   // Collect post data if the firing element is a form.
   if(firingElement.action)
@@ -66,20 +52,7 @@ general.Stay = (function()
   }
 
   locked = true;
-
-  if(nextPage.lastIndexOf("/") === nextPage.length - 1)
-  {
-   // Homepage
-   postfix = "json";
-   title.style.opacity = 1.0;
-   smallTitle.style.opacity = 0.0;
-  }
-  else
-  {
-   postfix = "/json";
-   title.style.opacity = 0.0;
-   smallTitle.style.opacity = 1.0;
-  }
+  postfix = (nextPage.lastIndexOf("/") === nextPage.length - 1) ? "json" : "/json";
 
   if(formData)
   {
@@ -136,6 +109,53 @@ general.Stay = (function()
  }
 
  /**
+  * Updates the contents container with the new data.
+  *
+  * @param {object} response - The parsed server response.
+  */
+
+ function updateView(response)
+ {
+  var children, anon;
+
+  while(contents.children.length > 0)
+  {
+   contents.removeChild(contents.children[0]);
+  }
+
+  while(navigation.children.length > 0)
+  {
+   navigation.removeChild(navigation.children[0]);
+  }
+
+  anon = document.createElement("div");
+  anon.innerHTML = response.contents;
+
+  if(anon.children.length > 0)
+  {
+   title.style.opacity = 0.0;
+   smallTitle.style.opacity = 1.0;
+  }
+  else
+  {
+   title.style.opacity = 1.0;
+   smallTitle.style.opacity = 0.0;
+  }
+
+  while(anon.children.length > 0)
+  {
+   contents.appendChild(anon.children[0]);
+  }
+
+  anon.innerHTML = response.navigation;
+
+  while(anon.children.length > 0)
+  {
+   navigation.appendChild(anon.children[0]);
+  }
+ }
+
+ /**
   * This function acts when a requested page has completely been received.
   * The response will be a json object or a 404 page. Anything else will 
   * be treated as a json parse exception.
@@ -145,7 +165,7 @@ general.Stay = (function()
 
  function handleResponse()
  {
-  var response, i, len, children, anon;
+  var response;
 
   if(this.readyState === 4)
   {
@@ -166,42 +186,11 @@ general.Stay = (function()
     try
     {
      response = JSON.parse(this.responseText);
-
-     while(contents.children.length > 0)
-     {
-      contents.removeChild(contents.children[0]);
-     }
-
-     while(navigation.children.length > 0)
-     {
-      navigation.removeChild(navigation.children[0]);
-     }
-
-     anon = document.createElement("div");
-     anon.innerHTML = response.contents;
-
-     if(anon.children.length > 0)
-     {
-      title.style.opacity = 0.0;
-      smallTitle.style.opacity = 1.0;
-     }
-
-     while(anon.children.length > 0)
-     {
-      contents.appendChild(anon.children[0]);
-     }
-
-     anon.innerHTML = response.navigation;
-
-     while(anon.children.length > 0)
-     {
-      navigation.appendChild(anon.children[0]);
-     }
-
+     updateView(response);
      updateListeners();
      general.Move.reset();
      general.Quickinfo.reset();
-     History.pushState(null, response.title, nextPage); // this.responseURL contains "/json" at the end.
+     History.pushState(null, response.title, this.responseURL.slice(0, this.responseURL.lastIndexOf("/"))); // Cut off the "/json" at the end.
     }
     catch(e)
     {
@@ -298,19 +287,21 @@ general.Stay = (function()
    h2.appendChild(document.createTextNode("Remembers your watched Animes"));
    title.appendChild(h1);
    title.appendChild(h2);
-   title.style.opacity = 0.0;
    document.getElementById("banner").appendChild(title);
   }
-
-  title.style.opacity = 0.0;
 
   if(!smallTitle)
   {
    smallTitle = document.createElement("h1");
    smallTitle.id = "smallTitle";
    smallTitle.appendChild(document.createTextNode("AhKneeMay!"));
-   title.style.opacity = 0.0;
    document.getElementById("contentinfo").appendChild(smallTitle);
+  }
+
+  if(contents.children.length)
+  {
+   title.style.opacity = 0.0;
+   smallTitle.style.opacity = 1.0;
   }
 
   if(contents && navigation)
@@ -329,7 +320,7 @@ general.Stay = (function()
 }());
 
 /** End of Strict-Mode-Encapsulation **/
-}(undefined, window, document, general));
+}(window, document, general));
 
 
 

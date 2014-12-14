@@ -1,10 +1,13 @@
 /**
- * Deals with the different error codes
- * and sets appropriate response messages
- * for a custom error page.
+ * Copyright (c) 2014 Raoul van Rueschen
+ * Licensed under the MIT license.
+ *
+ * This module deals with the different http 
+ * error codes and sets appropriate response
+ * messages on a dedicated error page.
  *
  * @author Raoul van Rueschen
- * @version 0.0.1, 06.09.2014
+ * @version 0.1.0, 13.12.2014
  */
 
 "use strict";
@@ -35,7 +38,7 @@ module.exports = function(error, request, response, next)
  }
  else if(error.status === 403)
  {
-  locals.description = "This page is not accessable by the public.";
+  locals.description = "This page is not publicly available.";
   locals.message = locals.description;
  }
  else if(error.status === 404)
@@ -52,6 +55,7 @@ module.exports = function(error, request, response, next)
  {
   locals.description = "This website is currently unavailable. Please try again later!";
   locals.message = locals.description;
+  logger.log("error", error + "\n" + error.stack);
  }
  else
  {
@@ -60,16 +64,6 @@ module.exports = function(error, request, response, next)
   logger.log("error", error + "\n" + error.stack);
  }
 
- /*if(error.json)
- {
-  response.writeHead(error.status, {"Content-Type": "application/json"});
-  response.end(JSON.stringify({
-   message: locals.message
-  }));
- }
- else
- {*/
  response.status(error.status);
  response.render("error", locals);
- //}
 };

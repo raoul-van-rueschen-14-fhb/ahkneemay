@@ -1,0 +1,23 @@
+if(message.length)
+ p(role="alert").flash #{message}
+  a(href="/signup")#closeFlash Okay
+
+form(action="/signup" method="post" enctype="multipart/form-data")#signup
+
+ .label-box
+  label(for="username") Username
+  label(for="password") Password
+  label(for="password2") Verify Password
+
+ .input-box
+  input(type="text" name="username" placeholder="at least 6 characters" aria-required="true")#username
+  input(type="text" name="user")#el
+  input(type="password" name="pass")#psy
+  input(type="password" name="password" placeholder="at least 8 characters" aria-required="true")#password
+  input(type="password" name="password2" aria-required="true")#password2
+  input(type="text" name="email")#congroo
+
+ div
+  input(type="submit" value="Sign Up")
+
+p.loginSignup: a(href="/login") I already have an account

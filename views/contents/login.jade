@@ -1,0 +1,23 @@
+if(message.length)
+ p(role="alert").flash #{message}
+  a(href="/login")#closeFlash Okay
+
+form(action="/login" method="post" enctype="multipart/form-data")#login
+
+ .label-box
+  label(for="username") Username
+  label(for="password") Password
+
+ .input-box
+  input(type="text" name="username" aria-required="true")#username
+  input(type="text" name="user")#el
+  input(type="password" name="pass")#psy
+  input(type="password" name="password" aria-required="true")#password
+
+ div
+  label(for="remember").remember Keep me logged in
+  input(type="checkbox" name="remember" value="yes")#remember
+
+ input(type="submit" value="Login")
+
+p.loginSignup: a(href="/signup") Let me create a new one

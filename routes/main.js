@@ -1,17 +1,20 @@
 /**
+ * Copyright (c) 2014 Raoul van Rueschen
+ * Licensed under the Zlib license.
+ * 
  * This module defines methods which actually generate and
  * assemble all the necessary data for each kind of request.
  * Most of these methods utilize methods from another module,
  * but some of them also act independently.
  *
  * @author Raoul van Rueschen
- * @version 0.0.1, 06.09.2014
+ * @version 0.1.0, 13.12.2014
  */
 
 "use strict";
 
-var ahkneemay = require("../lib/ahkneemay"),
- http = require("http");
+var http = require("http"),
+ ahkneemay = require("../lib/ahkneemay");
 
 /**
  * The Homepage.
@@ -23,14 +26,16 @@ module.exports.index = function(request, response, next)
  response.locals.jade.template = "index";
  response.locals.jade.locals = {
   title: "AhKneeMay",
-  description: "This page shows you an overview of your watched animes.",
+  description: "This page gives you an overview of your watched animes!",
   currentPage: "Home",
-  message: request.flash("info")
+  display: (request.isAuthenticated() ? "authenticated" : "anonymous"),
+  message: request.flash("info"),
+  user: request.user
  };
 
  try
  {
-  ahkneemay.listAnimes(response.locals.jade.locals, next);
+  ahkneemay.listAnimes(response.locals.jade.locals, (request.user ? request.user.username.S : null), next);
  }
  catch(e)
  {
@@ -50,7 +55,9 @@ module.exports.about = function(request, response, next)
  response.locals.jade.locals = {
   title: "About - AhKneeMay",
   description: "This website can keep track of your watched animes by storing information in the cloud.",
-  currentPage: "About"
+  currentPage: "About",
+  display: (request.isAuthenticated() ? "authenticated" : "anonymous"),
+  user: request.user
  };
 
  next();
@@ -97,12 +104,14 @@ module.exports.quickinfo = function(request, response, next)
 module.exports.showForm = function(request, response, next)
 {
  response.locals.jade = {};
- response.locals.jade.template = "form";
+ response.locals.jade.template = "addanime";
  response.locals.jade.locals = {
   title: "Add an Anime - AhKneeMay",
   description: "Add a new title to your list of watched animes.",
   currentPage: "Add Anime",
-  message: request.flash("info")
+  display: (request.isAuthenticated() ? "authenticated" : "anonymous"),
+  message: request.flash("info"),
+  user: request.user
  };
 
  next();
@@ -125,7 +134,7 @@ module.exports.addAnime = function(request, response, next)
 
  try
  {
-  ahkneemay.addAnime(anime, function(error, result)
+  ahkneemay.addAnime(anime, request.user.username.S, function(error, result)
   {
    request.flash("info", error ? error.message : result);
    response.redirect(request.params.json ? "/animes/json" : "/animes");
@@ -144,11 +153,9 @@ module.exports.addAnime = function(request, response, next)
 
 module.exports.removeAnime = function(request, response, next)
 {
- var anime = request.params.anime;
-
  try
  {
-  ahkneemay.removeAnime(anime, function(error, result)
+  ahkneemay.removeAnime(request.params.anime, request.user.username.S, function(error, result)
   {
    request.flash("info", error ? error.message : result);
    response.redirect(request.params.json ? "/json" : "/");

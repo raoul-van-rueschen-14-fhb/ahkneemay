@@ -1,7 +1,6 @@
 /**
  * Released under the terms of the CC0 1.0 Universal legal code:
  * http://creativecommons.org/publicdomain/zero/1.0/legalcode
- * _______________________________________________________________________________
  * 
  * Creates a SmoothMovement which produces integer position values
  * representing movement towards a target position, with a maximum acceleration
@@ -12,7 +11,7 @@
 
 var general = general || {};
 
-(function(undefined, window)
+(function(window, undefined)
 {
  "use strict";
 
@@ -51,22 +50,22 @@ general.SmoothMovement.prototype.update = function()
 {
  if(this.velocity < 0)
  {
-  if(this.target > (this.position - this.velocity * (this.velocity - 1) / 2))
+  if(this.target > (this.position - (this.velocity * (this.velocity - 1) >> 1)))
   {
    ++this.velocity;
   }
-  else if(this.target <= (this.position - (this.velocity - 1) * (this.velocity - 2) / 2))
+  else if(this.target <= (this.position - ((this.velocity - 1) * (this.velocity - 2) >> 1)))
   {
    --this.velocity;
   }
  }
  else
  {
-  if(this.target < (this.position + this.velocity * (this.velocity + 1) / 2))
+  if(this.target < (this.position + (this.velocity * (this.velocity + 1) >> 1)))
   {
    --this.velocity;
   }
-  else if(this.target >= (this.position + (this.velocity + 1) * (this.velocity + 2) / 2))
+  else if(this.target >= (this.position + ((this.velocity + 1) * (this.velocity + 2) >> 1)))
   {
    ++this.velocity;
   }
@@ -86,7 +85,7 @@ general.SmoothMovement.prototype.hasStopped = function()
 };
 
 /** End of Strict-Mode-Encapsulation **/
-}(undefined, window));
+}(window));
 
 
 

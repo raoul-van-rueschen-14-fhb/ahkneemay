@@ -1,6 +1,6 @@
 {
   "name": "ahkneemay",
-  "description": "A manager that keeps track of your watched animes by storing information in the cloud.",
+  "description": "A website that keeps track of your watched animes by storing information in the cloud.",
   "version": "0.1.0",
   "private": "true",
   "homepage": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay",
@@ -17,11 +17,11 @@
   },
   "licenses": [
     {
-      "type": "MIT",
-      "url": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay/blob/master/LICENSE-MIT"
+      "type": "Zlib",
+      "url": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay/blob/master/LICENSE-ZLIB"
     }
   ],
-  "main": "lib/ahkneemay",
+  "main": "index",
   "engines": {
     "node": ">= 0.8.0"
   },

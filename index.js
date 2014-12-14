@@ -1,5 +1,8 @@
 /**
- * Main Server Application.
+ * Copyright (c) 2014 Raoul van Rueschen
+ * Licensed under the Zlib license.
+ * 
+ * Main Server Configuration.
  * 
  * @author Raoul van Rueschen
  * @version 0.1.0, 02.12.2014
@@ -8,11 +11,12 @@
 "use strict";
 
 var cookieParser = require("cookie-parser"),
- ahkneemay = require("./lib/ahkneemay"),
  session = require("express-session"),
  bodyParser = require("body-parser"),
  favicon = require("serve-favicon"),
  flash = require("connect-flash"),
+ passport = require("passport"),
+ aws = require("./config/aws"),
  express = require("express"),
  logger = require("winston"),
  multer  = require("multer"),
@@ -34,6 +38,9 @@ if(server.get("env") === "production")
  logger.remove(logger.transports.Console);
 }
 
+// Configure passport and connect it with the db.
+require("./config/passport")(passport, aws);
+
 // Setup the template engine.
 server.set("views", path.join(__dirname, "views"));
 server.set("view engine", "jade");
@@ -50,6 +57,10 @@ server.use(session({
 
 // Message relaying with sessions.
 server.use(flash());
+
+// Start passport with persistent login sessions and use it.
+server.use(passport.initialize());
+server.use(passport.session());
 
 // Get information from html forms with enctype "x-www-form-urlencoded".
 server.use(bodyParser.urlencoded({limit: "1mb", extended: false}));
@@ -73,10 +84,10 @@ if(server.get("env") === "development")
 }
 
 // Setup the routes.
-require("./routes/index")(server);
+require("./routes/index")(server, passport);
 
 // Initialize AWS and start the http server afterwards.
-ahkneemay.init(false, "ahkneemay", function(error)
+aws.init(false, "ahkneemay", function(error)
 {
  if(error)
  {
@@ -91,10 +102,10 @@ ahkneemay.init(false, "ahkneemay", function(error)
    var timeString;
 
    startTime = new Date();
-   timeString = startTime.getFullYear() + "-" + (startTime.getMonth() + 1) + "-" + startTime.getDate() + " " +
-                startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds()
+   server.set("startTime", startTime.getFullYear() + "-" + (startTime.getMonth() + 1) + "-" + startTime.getDate() + " " +
+                startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds());
 
-   logger.log("info", "Start time: " + timeString);
+   logger.log("info", "Start time: " + server.get("startTime"));
    logger.log("info", "HTTP-Server is now running on port " + server.get("port"));
   });
  }

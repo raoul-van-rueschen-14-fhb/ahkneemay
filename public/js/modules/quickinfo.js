@@ -1,23 +1,9 @@
 /**
  * Copyright (c) 2014 Raoul van Rueschen
- * 
- * This software is provided 'as-is', without any express or implied
- * warranty. In no event will the authors be held liable for any damages
- * arising from the use of this software.
- * 
- * Permission is granted to anyone to use this software for any purpose,
- * including commercial applications, and to alter it and redistribute it
- * freely, subject to the following restrictions:
- *  1. The origin of this software must not be misrepresented; you must not
- *     claim that you wrote the original software. If you use this software
- *     in a product, an acknowledgment in the product documentation would be
- *     appreciated but is not required.
- *  2. Altered source versions must be plainly marked as such, and must not be
- *     misrepresented as being the original software.
- *  3. This notice may not be removed or altered from any source distribution.
-
+ * Licensed under the Zlib license.
+ *
  * @author Raoul van Rueschen
- * @version 0.0.1, 08.12.2014
+ * @version 0.1.0, 08.12.2014
  */
 
 var general = general || {};
@@ -28,6 +14,7 @@ var general = general || {};
 
 /**
  * Quickinfo Module.
+ * Fetches information about anime series from TV-Rage.
  */
 
 general.Quickinfo = (function()
@@ -60,7 +47,7 @@ general.Quickinfo = (function()
  /**
   * Updates the input form with new values.
   *
-  * @param {object} infos The most important quickinfos from TV-Rage.
+  * @param {object} infos - The most important quickinfos from TV-Rage.
   */
 
  function updateForm(infos)
@@ -75,7 +62,7 @@ general.Quickinfo = (function()
  /**
   * Parses the quickinfos from TV-Rage.
   *
-  * @param {string} response The server response text.
+  * @param {string} response - The server response text.
   */
 
  function parseInfos(response)

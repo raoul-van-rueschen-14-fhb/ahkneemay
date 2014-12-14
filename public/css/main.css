@@ -10,7 +10,8 @@
  * 05. Anchors and Navigation
  * 06. Page Structure
  * 07. Forms and Input
- * 08. Anime Gallery
+ * 08. Special Forms
+ * 09. Anime Gallery
  *
  * @author Raoul van Rueschen
  * @version 0.1.0, 11.12.2014
@@ -214,6 +215,52 @@ div[role="banner"] {
  transform-style: preserve-3d;
 }
 
+div[role="main"] {
+ position: absolute;
+ z-index: 1;
+ top: 0;
+ width: 100%;
+ height: 100%;
+}
+
+div[role="complementary"] {
+ position: fixed;
+ z-index: 5;
+ top: 0;
+ left: 0;
+ right: 0;
+ text-align: right;
+ background-color: rgba(0, 0, 0, 0.15);
+}
+
+div[role="contentinfo"] {
+ position: fixed;
+ z-index: 4;
+ bottom: 0;
+ left: 0;
+ right: 0;
+ padding: 0 2vw;
+ text-align: center;
+ font-size: 2vmin;
+ color: rgb(30, 150, 150);
+ text-shadow: 0 0 18px rgb(12, 12, 12);
+ height: 5vmin;
+ line-height: 5vmin;
+ background-color: rgba(0, 0, 0, 0.15);
+}
+
+div[role="contentinfo"] h1,
+div[role="contentinfo"] h2 {
+ position: absolute;
+ top: 0;
+ font-size: 3vmin;
+}
+
+div[role="contentinfo"] h2 {
+ text-align: right;
+ right: 8vmin;
+}
+
 #title {
  position: relative;
  top: 50%;
@@ -237,52 +284,6 @@ div[role="banner"] {
  font-family: inherit;
  font-size: 3vmin;
  text-align: center;
-}
-
-div[role="main"] {
- position: absolute;
- z-index: 1;
- top: 0;
- width: 100%;
- height: 100%;
-}
-
-div[role="complementary"] {
- position: fixed;
- z-index: 5;
- top: 0;
- left: 0;
- right: 0;
- text-align: right;
- background-color: rgba(0, 0, 0, 0.1);
-}
-
-div[role="contentinfo"] {
- position: fixed;
- z-index: 4;
- bottom: 0;
- left: 0;
- right: 0;
- padding: 0 2vw;
- text-align: center;
- font-size: 2vmin;
- color: rgb(30, 150, 150);
- text-shadow: 0 0 18px rgb(12, 12, 12);
- height: 5vmin;
- line-height: 5vmin;
- background-color: rgba(0, 0, 0, 0.1);
-}
-
-div[role="contentinfo"] h1,
-div[role="contentinfo"] h2 {
- position: absolute;
- top: 0;
- font-size: 3vmin;
-}
-
-div[role="contentinfo"] h2 {
- text-align: right;
- right: 8vmin;
 }
 
 #smallTitle {
@@ -330,9 +331,9 @@ div[role="contentinfo"] h2 {
  z-index: 10;
  top: 50%;
  left: 50%;
- min-width: 8vw;
+ min-width: 10vw;
  max-width: 50vw;
- min-height: 10vh;
+ min-height: 11vh;
  padding: 2vmin;
  transform: translate(-50%, -50%);
  border-radius: 8px;
@@ -424,8 +425,45 @@ input[type="checkbox"]:checked {
  box-shadow: 0px 0px 12px rgb(225, 200, 160);
 }
 
+::-webkit-input-placeholder {
+ color: rgb(100, 80, 100);
+}
+
+:-moz-placeholder {
+ color: rgb(100, 80, 100);
+}
+
+::-moz-placeholder {
+ color: rgb(100, 80, 100);
+}
+
+:-ms-input-placeholder {
+ color: rgb(100, 80, 100);
+}
+
+#el, #psy, #congroo {
+ display: none;
+}
+
+/**
+ * 08. Special Forms
+ */
+
 #animeForm {
  margin-top: 16vh;
+}
+
+#login,
+#signup {
+ margin-top: 25vh;
+}
+
+p.loginSignup {
+ position: absolute;
+ bottom: 1vmin;
+ left: 4vw;
+ right: 4vw;
+ text-align: center;
 }
 
 .label-box {
@@ -468,6 +506,10 @@ input[type="checkbox"]:checked {
  opacity: 0.0;
 }
 
+.remember {
+ padding-right: 1vw;
+}
+
 .browse {
  margin: 0.5vh 0;
  cursor: pointer;
@@ -475,7 +517,7 @@ input[type="checkbox"]:checked {
 }
 
 /**
- * 08. Anime Gallery
+ * 09. Anime Gallery
  */
 
 #animes {
@@ -484,6 +526,7 @@ input[type="checkbox"]:checked {
  top: 0;
  left: 0;
  right: 0;
+ bottom: 0;
  padding: 1vmin;
  margin: 0;
  text-align: center;

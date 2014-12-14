@@ -1,41 +1,62 @@
 /**
+ * Copyright (c) 2014 Raoul van Rueschen
+ * Licensed under the MIT license.
+ *
  * Test Suite for the AhKneeMay Module.
+ *
+ * @author Raoul van Rueschen
+ * @version 0.1.0, 13.12.2014
  */
 
 "use strict";
 
-var ahkneemay = require("../lib/ahkneemay.js");
+var aws = require("../config/aws"),
+ ahkneemay = require("../lib/ahkneemay");
 
 module.exports = {
  setUp: function(done)
  {
-  done();
+  aws.init(true, "dummy", done);
  },
  tearDown: function(done)
  {
   done();
  },
- "initializing aws": function(test)
+ "the aws module": function(test)
+ {
+  test.expect(6);
+  test.ok(aws.userTable, "should reveal the name of the table that holds all users.");
+  test.ok(aws.animeTable, "should reveal the name of the table that holds all animes.");
+  test.ok(aws.animeBucket, "should reveal the name of the image bucket.");
+  test.ok(aws.bucketURL, "should reveal the url of the image bucket.");
+  test.ok(aws.dynamoDB, "should reveal the dynamoDB object.");
+  test.ok(aws.s3, "should reveal the s3 object.");
+  test.done();
+ },
+ "adding an anime (1)": function(test)
  {
   test.expect(1);
-
-  ahkneemay.init(true, "ahkneemay", function(error)
+  ahkneemay.addAnime({}, null, function(error)
   {
-   test.equal(error, null, "should finish without errors under mockup conditions.");
+   test.notEqual(error, null, "requires the title parameter.");
    test.done();
-   // What happens if there IS an error? -The server will log the error and then exit.
-   // Note: Errors in private sub-methods which are used by init will bubble up.
   });
  },
- "adding an anime": function(test)
+ "adding an anime (2)": function(test)
  {
-  var anime = {title: "dummy", img: {mimetype: "image/jpeg"}};
-
   test.expect(1);
-
-  ahkneemay.addAnime(anime, function(error)
+  ahkneemay.addAnime({title: "dummy"}, null, function(error)
   {
-   test.equal(error, null, "should not yield any errors under mockup conditions.");
+   test.notEqual(error, null, "requires the img parameter.");
+   test.done();
+  });
+ },
+ "adding an anime (3)": function(test)
+ {
+  test.expect(1);
+  ahkneemay.addAnime({title: "dummy", img: {mimetype: "image/jpeg"}}, null, function(error)
+  {
+   test.ifError(error, "should work if the required parameters are set.");
    test.done();
   });
  },
@@ -44,21 +65,19 @@ module.exports = {
   var locals = {};
 
   test.expect(2);
-
-  ahkneemay.listAnimes(locals, function(error)
+  ahkneemay.listAnimes(locals, null, function(error)
   {
-   test.equal(error, null, "should not result in an error under mockup conditions.");
-   test.ok(locals.animes, "and there should be a set of animes in the provided locals afterwards.");
+   test.ifError(error, "should not result in an error under mockup conditions.");
+   test.ok(locals.animes, "should populate the given locals object with a list of animes.");
    test.done();
   });
  },
  "removing an anime": function(test)
  {
   test.expect(1);
-
-  ahkneemay.removeAnime("dummy", function(error)
+  ahkneemay.removeAnime("dummy", null, function(error)
   {
-   test.equal(error, null, "should not result in an error under mockup conditions.");
+   test.ifError(error, "should not result in an error under mockup conditions.");
    test.done();
   });
  }
