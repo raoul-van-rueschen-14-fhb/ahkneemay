@@ -13,10 +13,10 @@ npm install
 Since this application relies on AWS, you'll have to provide your credentials in _aws.json_. There's an example in the _config_ folder. You may then start the server with:
 
 ```javascript
-node index.js
+node index.js PORT ENVIRONMENT
 ```
 
-The server will listen on port 8080. If you wish to run this project behind a proxy, you'll have to [configure Node manually](http://jjasonclark.com/how-to-setup-node-behind-web-proxy).
+The server will listen on the specified port (default is 80!). Setting the environment to "production" lets the server optimize some things and generate log files. In case you wish to run this project behind a proxy, you'll have to [configure Node manually](http://jjasonclark.com/how-to-setup-node-behind-web-proxy).
 
 ## Documentation
 _(Coming soon)_
@@ -29,4 +29,4 @@ _(Nothing yet)_
 
 ## License
 Copyright (c) 2014 Raoul van Rüschen  
-Licensed under the MIT license.
+Licensed under the Zlib license.
