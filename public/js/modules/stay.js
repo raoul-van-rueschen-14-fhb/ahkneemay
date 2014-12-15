@@ -69,6 +69,25 @@ general.Stay = (function()
  }
 
  /**
+  * Sets the visibility of the two titles based
+  * on the current contents.
+  */
+
+ function juggleTitles()
+ {
+  if(contents.children.length)
+  {
+   title.style.opacity = 0.0;
+   smallTitle.style.opacity = 1.0;
+  }
+  else
+  {
+   title.style.opacity = 1.0;
+   smallTitle.style.opacity = 0.0;
+  }
+ }
+
+ /**
   * This function is bound to all links and forms
   * and executes the desired page navigation on left clicks.
   *
@@ -99,7 +118,7 @@ general.Stay = (function()
    {
     this.parentNode.parentNode.removeChild(this.parentNode);
 
-    if(contents.children.length) { title.style.opacity = 0.0; }
+    juggleTitles();
     updateListeners();
    }
    else
@@ -133,17 +152,6 @@ general.Stay = (function()
   anon = document.createElement("div");
   anon.innerHTML = response.contents;
 
-  if(anon.children.length > 0)
-  {
-   title.style.opacity = 0.0;
-   smallTitle.style.opacity = 1.0;
-  }
-  else
-  {
-   title.style.opacity = 1.0;
-   smallTitle.style.opacity = 0.0;
-  }
-
   while(anon.children.length > 0)
   {
    contents.appendChild(anon.children[0]);
@@ -155,6 +163,8 @@ general.Stay = (function()
   {
    navigation.appendChild(anon.children[0]);
   }
+
+  juggleTitles();
  }
 
  /**
@@ -300,7 +310,7 @@ general.Stay = (function()
    document.getElementById("contentinfo").appendChild(smallTitle);
   }
 
-  if(contents.children.length) { title.style.opacity = 0.0; }
+  juggleTitles();
 
   if(contents && navigation)
   {

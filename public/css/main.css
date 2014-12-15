@@ -497,6 +497,10 @@ p.loginSignup {
  text-overflow: ellipsis;
 }
 
+#selectedFile {
+ margin-left: 1vmin;
+}
+
 .input-box input.hidden {
  position: absolute;
  width: 0;
