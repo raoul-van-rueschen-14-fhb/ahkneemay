@@ -5,7 +5,7 @@
  * This module offers methods that are closely tied to authentication.
  *
  * @author Raoul van Rueschen
- * @version 0.1.0, 06.09.2014
+ * @version 1.0.0, 15.12.2014
  */
 
 "use strict";

@@ -3,7 +3,7 @@
  * Licensed under the Zlib license.
  *
  * @author Raoul van Rueschen
- * @version 0.1.4, 10.10.2014
+ * @version 1.0.0, 15.12.2014
  */
 
 var general = general || {};
@@ -301,7 +301,6 @@ general.Stay = (function()
   if(contents.children.length)
   {
    title.style.opacity = 0.0;
-   smallTitle.style.opacity = 1.0;
   }
 
   if(contents && navigation)

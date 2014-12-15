@@ -5,7 +5,7 @@
  * AWS Setup Module.
  *
  * @author Raoul van Rueschen
- * @version 0.1.0, 13.12.2014
+ * @version 1.0.0, 15.12.2014
  */
 
 "use strict";

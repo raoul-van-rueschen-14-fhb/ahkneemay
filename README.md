@@ -16,7 +16,7 @@ Since this application relies on AWS, you'll have to provide your credentials in
 node index.js PORT ENVIRONMENT
 ```
 
-The server will listen on the specified port (default is 80!). Setting the environment to "production" lets the server optimize some things and generate log files. In case you wish to run this project behind a proxy, you'll have to [configure Node manually](http://jjasonclark.com/how-to-setup-node-behind-web-proxy).
+The server will listen on the specified port (defaults to 80!). Setting the optional environment parameter to "production" lets the server optimize some things and generate log files. In case you wish to run this project behind a proxy, you'll have to [configure Node manually](http://jjasonclark.com/how-to-setup-node-behind-web-proxy).
 
 ## Documentation
 _(Coming soon)_
@@ -25,7 +25,10 @@ _(Coming soon)_
 Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+Version: 1.0.0 (15.12.2014)
+         The system implements all the necessary features and supports a pure single-page behaviour as well as a
+         traditional multi-page fallback for users who disabled Javascript in their browser. User authentication is also available; 
+         many users can create their own personal anime lists.
 
 ## License
 Copyright (c) 2014 Raoul van Rüschen  

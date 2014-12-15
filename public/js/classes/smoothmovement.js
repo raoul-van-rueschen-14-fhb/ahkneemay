@@ -7,6 +7,7 @@
  * or deceleration of one distance unit per time unit squared.
  *
  * @author Stephen Morley - http://code.stephenmorley.org/ (Modified by Raoul van Rueschen)
+ * @version 1.0.0, 15.12.2014
  */
 
 var general = general || {};
