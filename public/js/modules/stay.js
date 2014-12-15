@@ -98,6 +98,8 @@ general.Stay = (function()
    if(this.id === "closeFlash")
    {
     this.parentNode.parentNode.removeChild(this.parentNode);
+
+    if(contents.children.length) { title.style.opacity = 0.0; }
     updateListeners();
    }
    else
@@ -298,10 +300,7 @@ general.Stay = (function()
    document.getElementById("contentinfo").appendChild(smallTitle);
   }
 
-  if(contents.children.length)
-  {
-   title.style.opacity = 0.0;
-  }
+  if(contents.children.length) { title.style.opacity = 0.0; }
 
   if(contents && navigation)
   {

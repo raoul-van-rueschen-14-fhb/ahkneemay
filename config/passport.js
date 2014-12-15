@@ -106,9 +106,9 @@ module.exports = function(passport, aws)
        if(data && data.Item)
        {
         // Have to inform the user.
-        signupError = new Error("This username is already taken.");
-        signupError.fatal = false;
-        callback(signupError);
+        signUpError = new Error("This username is already taken.");
+        signUpError.fatal = false;
+        callback(signUpError);
        }
        else
        {
@@ -150,6 +150,7 @@ module.exports = function(passport, aws)
      }
      else
      {
+      request.flash("info", "The registration was successful!");
       done(null, newUser);
      }
     });
