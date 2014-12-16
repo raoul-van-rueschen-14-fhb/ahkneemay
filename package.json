@@ -8,9 +8,6 @@
     "name": "Raoul van Rüschen",
 	  "email": "vanruesc@fh-brandenburg.de"
   },
-  "scripts": {
-	  "start": "node index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/raoul-van-rueschen-14-fhb/ahkneemay.git"
@@ -29,7 +26,8 @@
     "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt nodeunit"
+    "test": "grunt nodeunit",
+	  "start": "node index.js 8080 production"
   },
   "dependencies": {
     "async-waterfall": "0.1.x",
