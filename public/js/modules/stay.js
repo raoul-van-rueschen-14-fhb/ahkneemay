@@ -202,7 +202,11 @@ general.Stay = (function()
      updateListeners();
      general.Move.reset();
      general.Quickinfo.reset();
-     History.pushState(null, response.title, this.responseURL.slice(0, this.responseURL.lastIndexOf("/"))); // Cut off the "/json" at the end.
+
+     if(this.responseURL)
+     {
+      History.pushState(null, response.title, this.responseURL.slice(0, this.responseURL.lastIndexOf("/"))); // Cut off the "/json" at the end.
+     }
     }
     catch(e)
     {

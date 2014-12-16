@@ -52,11 +52,14 @@ general.Quickinfo = (function()
 
  function updateForm(infos)
  {
-  lastTitle = infos.title;
-  inputTitle.value = infos.title;
-  inputYear.value = infos.year;
-  inputSeasons.value = infos.seasons;
-  inputPublisher.value = infos.publisher;
+  if(infos.title)
+  {
+   lastTitle = infos.title;
+   inputTitle.value = infos.title;
+  }
+  if(infos.year) { inputYear.value = infos.year; }
+  if(infos.seasons) { inputSeasons.value = infos.seasons; }
+  if(infos.publisher) { inputPublisher.value = infos.publisher; }
  }
 
  /**
