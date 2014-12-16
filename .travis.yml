@@ -9,7 +9,7 @@ before_script:
  - npm install -g grunt-cli
 after_success:
  - mkdir build
- - zip /build/version.zip *
+ - zip build/version.zip *
 deploy:
  provider: s3
  access_key_id:
