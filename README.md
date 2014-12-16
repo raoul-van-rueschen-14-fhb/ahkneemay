@@ -10,7 +10,7 @@ Install [Node](http://nodejs.org/) first! Download this project, open the termin
 npm install
 ```
 
-Since this application relies on AWS, you'll have to provide your credentials in _aws.json_. There's an example in the _config_ folder. You may then start the server with:
+Since this application relies on AWS, you'll have to provide your credentials in __aws.json__. There's an example in the __config__ folder. You may then start the server with:
 
 ```javascript
 node index.js PORT ENVIRONMENT
@@ -25,10 +25,8 @@ _(Coming soon)_
 Maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-Version: 1.0.0 (15.12.2014)
-         The system implements all the necessary features and supports a pure single-page behaviour as well as a
-         traditional multi-page fallback for users who disabled Javascript in their browser. User authentication is also available; 
-         many users can create their own personal anime lists.
+_Version: 1.0.0 (15.12.2014)_
+> The system implements all the necessary features and supports a pure single-page behaviour as well as a traditional multi-page fallback for users who disabled Javascript in their browser. User authentication is also available; many users can create their own personal anime lists.
 
 ## License
 Copyright (c) 2014 Raoul van Rüschen  
