@@ -6,7 +6,10 @@
   "homepage": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay",
   "author": {
     "name": "Raoul van Rüschen",
-    "email": "vanruesc@fh-brandenburg.de"
+	  "email": "vanruesc@fh-brandenburg.de"
+  },
+  "scripts": {
+	  "start": "node index.js"
   },
   "repository": {
     "type": "git",

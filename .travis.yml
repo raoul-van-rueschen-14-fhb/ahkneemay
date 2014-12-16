@@ -1,12 +1,15 @@
 language: node_js
 node_js:
-  - '0.8'
-  - '0.10'
+ - '0.8'
+ - '0.10'
 before_install:
-  - '[ "${TRAVIS_NODE_VERSION}" != "0.8" ] || npm install -g npm@1.4.28'
-  - npm install -g npm@latest
+ - '[ "${TRAVIS_NODE_VERSION}" != "0.8" ] || npm install -g npm@1.4.28'
+ - npm install -g npm@latest
 before_script:
-  - npm install -g grunt-cli
+ - npm install -g grunt-cli
+after_success:
+ - mkdir build
+ - zip /build/version.zip *
 deploy:
  provider: s3
  access_key_id:
@@ -18,3 +21,4 @@ deploy:
  acl: public_read
  region: eu-west-1
  endpoint: s3-website-eu-west-1.amazonaws.com
+ local-dir: build
