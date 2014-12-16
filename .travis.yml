@@ -9,8 +9,10 @@ before_script:
   - npm install -g grunt-cli
 deploy:
  provider: s3
- access_key_id: "YFMklG9mGdb7etpFUnrzzFB5aBgmwP0QEeRhNXzfVMfp/sPXU9OhuKrvIZrVLNCYtlalZGIG+MnGRT4BgEdqU4xkzwZvrq2nzgzr6LRxhqNfD1vXpZxLgEIsKYCHa5mBmR+w16B9QllgNj4epINTVDqSDrdodfU25B+ryvUW/ZM="
- secret_access_key: "ghLAzXeESh/82lFwcT1jUhOgxFn88x4XAIZt+/1q1PXrD9iBd42C/AD9drkkaY2JwE0aGJkBuGAp+UvShUVNelzfEigPBMjSeyUwzbydiionQHmYvZi37SIfSYBvJ4t9Pi1f5MC2IMCtkWxojJRklgG7Scjpn404q83+ooBqLSA="
+ access_key_id:
+  secure: "YFMklG9mGdb7etpFUnrzzFB5aBgmwP0QEeRhNXzfVMfp/sPXU9OhuKrvIZrVLNCYtlalZGIG+MnGRT4BgEdqU4xkzwZvrq2nzgzr6LRxhqNfD1vXpZxLgEIsKYCHa5mBmR+w16B9QllgNj4epINTVDqSDrdodfU25B+ryvUW/ZM="
+ secret_access_key:
+  secure: "ghLAzXeESh/82lFwcT1jUhOgxFn88x4XAIZt+/1q1PXrD9iBd42C/AD9drkkaY2JwE0aGJkBuGAp+UvShUVNelzfEigPBMjSeyUwzbydiionQHmYvZi37SIfSYBvJ4t9Pi1f5MC2IMCtkWxojJRklgG7Scjpn404q83+ooBqLSA="
  bucket: "ahkneemay-deploy"
  skip_cleanup: true
  acl: public_read
