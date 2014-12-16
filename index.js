@@ -28,7 +28,16 @@ var cookieParser = require("cookie-parser"),
  args;
 
 args = process.argv.slice(2);
-server.set("port", (args[0] ? args[0] : 80));
+
+if(args[0])
+{
+ server.set("port", args[0]);
+}
+else
+{
+ server.set("port", (process.env.PORT ? process.env.PORT : 80));
+}
+
 server.set("env", (args[1] ? args[1] : "development"));
 
 // Setup logging to a log file. (Only for production.)
