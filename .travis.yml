@@ -8,6 +8,7 @@ before_install:
 before_script:
  - npm install -g grunt-cli
 after_success:
+ - mkdir build
  - zip -r build/version.zip *
 deploy:
  provider: s3
