@@ -108,8 +108,6 @@ aws.init(false, "ahkneemay", function(error)
   httpServer = http.createServer(server);
   httpServer.listen(server.get("port"), function()
   {
-   var timeString;
-
    startTime = new Date();
    server.set("startTime", startTime.getFullYear() + "-" + (startTime.getMonth() + 1) + "-" + startTime.getDate() + " " +
                 startTime.getHours() + ":" + startTime.getMinutes() + ":" + startTime.getSeconds());

@@ -210,10 +210,10 @@ function init(mock, prefix, next)
 // Reveal public members.
 module.exports = {
  init: init,
- get userTable() { return _userTable },
- get animeTable() { return _animeTable },
- get animeBucket() { return _animeBucket },
- get bucketURL() { return _bucketURL },
- get dynamoDB() { return _dynamoDB },
- get s3() { return _s3 }
+ get userTable() { return _userTable; },
+ get animeTable() { return _animeTable; },
+ get animeBucket() { return _animeBucket; },
+ get bucketURL() { return _bucketURL; },
+ get dynamoDB() { return _dynamoDB; },
+ get s3() { return _s3; }
 };

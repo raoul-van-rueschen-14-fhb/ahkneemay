@@ -216,7 +216,7 @@ general.Stay = (function()
 
    locked = false;
   }
- };
+ }
 
  /**
   * Support browser functionality "back" and "forward".
@@ -236,7 +236,7 @@ general.Stay = (function()
   {
    backForward = true;
   }
- };
+ }
 
  /**
   * Acts when an ajax timeout occurs.
