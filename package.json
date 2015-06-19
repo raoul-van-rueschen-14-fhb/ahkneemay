@@ -3,22 +3,22 @@
   "description": "A website that keeps track of your watched animes by storing information in the cloud.",
   "version": "1.0.0",
   "private": "true",
-  "homepage": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay",
+  "homepage": "https://github.com/vanruesc/ahkneemay",
   "author": {
     "name": "Raoul van Rüschen",
 	  "email": "vanruesc@fh-brandenburg.de"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/raoul-van-rueschen-14-fhb/ahkneemay.git"
+    "url": "git://github.com/vanruesc/ahkneemay.git"
   },
   "bugs": {
-    "url": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay/issues"
+    "url": "https://github.com/vanruesc/ahkneemay/issues"
   },
   "licenses": [
     {
       "type": "Zlib",
-      "url": "https://github.com/raoul-van-rueschen-14-fhb/ahkneemay/blob/master/LICENSE-ZLIB"
+      "url": "https://github.com/vanruesc/ahkneemay/blob/master/LICENSE-ZLIB"
     }
   ],
   "main": "index",
