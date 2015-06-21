@@ -1,4 +1,4 @@
-# ahkneemay [![Build Status](https://travis-ci.org/vanruesc/ahkneemay.svg?branch=master)](http://travis-ci.org/vanruesc/ahkneemay)
+# ahkneemay [![Build Status](https://travis-ci.org/vanruesc/ahkneemay.svg?branch=master)](https://travis-ci.org/vanruesc/ahkneemay) [![GitHub version](https://badge.fury.io/gh/vanruesc%2Fahkneemay.svg)](http://badge.fury.io/gh/vanruesc%2Fahkneemay) [![Dependencies](https://david-dm.org/vanruesc/ahkneemay.svg?branch=master)](https://david-dm.org/vanruesc/ahkneemay)
 
 A web server that keeps track of your watched animes by storing information in the cloud. This project relies on the Amazon Web Services EC2, DynamoDB and S3-Buckets.
 
