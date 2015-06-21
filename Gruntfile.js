@@ -4,9 +4,6 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
-    nodeunit: {
-      files: ["test/**/*_test.js"],
-    },
     jshint: {
       options: {
         jshintrc: ".jshintrc"
@@ -21,6 +18,11 @@ module.exports = function(grunt) {
         src: ["test/**/*.js"]
       },
     },
+
+    nodeunit: {
+      files: ["test/**/*_test.js"],
+    },
+
     watch: {
       gruntfile: {
         files: "<%= jshint.gruntfile.src %>",

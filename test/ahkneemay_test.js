@@ -1,13 +1,3 @@
-/**
- * Copyright (c) 2014 Raoul van Rueschen
- * Licensed under the MIT license.
- *
- * Test Suite for the AhKneeMay Module.
- *
- * @author Raoul van Rueschen
- * @version 1.0.0, 15.12.2014
- */
-
 "use strict";
 
 var aws = require("../config/aws"),
