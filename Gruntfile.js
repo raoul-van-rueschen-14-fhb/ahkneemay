@@ -1,7 +1,7 @@
 "use strict";
 
-module.exports = function(grunt) {
-
+module.exports = function(grunt)
+{
   // Project configuration.
   grunt.initConfig({
     jshint: {
