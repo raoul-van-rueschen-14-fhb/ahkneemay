@@ -20,7 +20,7 @@ module.exports = function(grunt)
     },
 
     nodeunit: {
-      files: ["test/**/*_test.js"],
+      files: ["test/**/*.js"],
     },
 
     watch: {
@@ -40,8 +40,8 @@ module.exports = function(grunt)
   });
 
   // These plugins provide necessary tasks.
-  grunt.loadNpmTasks("grunt-contrib-nodeunit");
   grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-contrib-nodeunit");
   grunt.loadNpmTasks("grunt-contrib-watch");
 
   // Default task.
