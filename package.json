@@ -35,9 +35,9 @@
     "express": "4.13.x",
     "express-session": "1.11.x",
     "jade": "1.11.x",
-    "multer": "0.1.x",
+    "multer": "1.0.x",
     "node-uuid": "1.4.x",
-    "passport": "0.2.x",
+    "passport": "0.3.x",
     "passport-local": "1.0.x",
     "serve-favicon": "2.3.x",
     "winston": "1.0.x"
